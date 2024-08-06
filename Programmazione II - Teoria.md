@@ -801,3 +801,5 @@ int main() {
 
 *Complessità*: $O(n^2)$
 *Vantagggio*: e fico
+
+#### Algoritmi Ricorsivi di Ordinamento
