@@ -800,6 +800,198 @@ int main() {
 ```
 
 *Complessità*: $O(n^2)$
-*Vantagggio*: e fico
+*Vantaggio*: e fico
 
 #### Algoritmi Ricorsivi di Ordinamento
+Rispetto agli *algoritmi di ordinamento iterativi* sono più efficienti, in termini di complessità. Si basano sulla ricorsione e sulla logica *dividi et impera*
+
+I passi del paradigma **dividi et impera** sono tre:
+1. *suddividere il problema in sottoproblemi*
+2. *risolvere i sottoproblemi*
+3. *combinare le soluzioni*
+
+##### Merge Sort
+La logica su cui si basa questo algoritmo risiede principalmente nella *combinazione*
+
+Quest'ultima è realizzata tramite una funzione **merge**:
+- prende un array di dimensione $n$
+- suddivide l'array in due sottoarray già ordinati
+- combina gli array nell'array più grande in modo tale che mantengano l'ordine esatto
+
+ **Esempio** della logica:
+ - *sotto-array di sinistra*:
+	 - ![[Pasted image 20240807153308.png|350]]
+	 - ![[Pasted image 20240807153357.png|350]]
+	 - ![[Pasted image 20240807153453.png|350]]
+	- ![[Pasted image 20240807153605.png|350]]
+- *stessa procedura per il sotto-array di destra*:
+	- ...
+- *combinazione finale*:
+	- ![[Pasted image 20240807153707.png|350]]
+	- ![[Pasted image 20240807153726.png|350]]
+
+*Complessità*: $O(n\log n)$ e complessità spaziale maggiore rispetto ai classici algoritmi di ordinamento
+*Vantaggio*: per grandi $n$, è la soluzione ottimale rispetto a **insertion sort**, **selection sort** e **bubble sort**
+
+**Algoritmo**:
+```c++
+#include <iostream>
+
+using namespace std;
+
+void merge(int* A, size_t p, size_t q, size_t r) {
+
+    size_t n1 = q-p+1; // Dimensione sotto-array L
+    size_t n2 = r-q;   // Dimensione sotto-array R
+
+    int* L = new int [n1+1];
+    int* R = new int [n2+1];
+
+    size_t i = 0, j = 0;
+    
+    // Inizializzo L con gli elementi di sinistra di A
+    for(i = 0; i < n1; i++) {
+        L[i] = A[p+i];
+    }
+
+    // Inizializzo R con gli elementi di destra di A
+    for(j = 0; j < n2; j++) {
+        R[j] = A[q+1+j];
+    }
+
+    i = j = 0;
+
+    L[n1] = R[n2] = INT_MAX;    // Elementi sentinella  
+
+    for(size_t k = p; k <= r; k++) {
+        if(L[i] < R[j]) {
+            A[k] = L[i];
+            i++;
+        } else {
+            A[k] = R[j];
+            j++;
+        }
+    }
+
+    delete [] L;
+    L = nullptr;
+
+    delete [] R;
+    R = nullptr;
+}
+
+void mergeSort(int* A, size_t p, size_t r) {
+
+    if(p < r) {
+        size_t q = (p+r)/2; // suddivido l'array in due parti
+        
+        mergeSort(A, p, q); // applico il merge sort fino a quando i sotto-array hanno dimensione = 1
+        mergeSort(A, q+1, r);
+        merge(A, p, q, r);
+    }
+}
+
+int main() {
+
+    constexpr size_t N = 11;
+
+    int array[N];
+
+    cout << "Fill array:\n";
+    for(size_t i = 0; i < N; i++)
+        cin >> array[i];
+
+    cout << "Unsorted Array:\n";
+    for(size_t i = 0; i < N; i++)
+        cout << array[i] << " ";
+
+    cout << "\nSorted Array:\n";
+    mergeSort(array, N-N, N);
+    for(size_t i = 0; i < N; i++)
+        cout << array[i] << " ";
+
+    return 0;
+}
+```
+
+##### Quick Sort
+La logica risiede principlamente sul passo di *suddivisione dello array*, chiamato anche *partition*
+
+Si sviluppa nel seguente modo:
+- si prende un elemento a caso che sarà il **pivot**
+- gli indici `p` ed `r` saranno gli indici di inizio e fine dello array
+	- si inizializzano gli indici `i = p-1` e `j = p`
+- si fa *scorrere* `j` da `p -> r`: se l'elemento $A[j]\leq$ **pivot** allora si fa *avanzare* `i` e si *scambia* $A[i]$ con $A[j]$
+- scorso tutto lo array, si *scambia* il **pivot** con $A[i+1]$ e *restituisco* `i+1` ovvero la posizione finale del **pivot**
+
+**N.B.**: lo scopo del pivot è di posizionarlo nella sua posizione ordinata finale, mettendo gli elementi minori a sinistra e maggiori a destra
+
+**Algoritmo**:
+```c++
+#include <iostream>
+
+using namespace std;
+  
+void swap(int& a, int& b) {
+
+    int t = a;
+    a = b;
+    b = t;
+}
+
+int partition(int* A, size_t p, size_t r) {
+
+    size_t i = p-1;
+    size_t j = p;
+
+    int& pivot = A[r];
+
+    while(j < r) {
+        if(A[j] <= pivot) {
+            i++;
+            swap(A[i], A[j]);
+        }
+        
+        j++;
+    }
+
+    swap(pivot, A[i+1]);
+
+    return i+1;
+}
+
+void quickSort(int* A, size_t p, size_t r) {
+
+    if(p < r) {
+        int q = partition(A, p, r);
+        
+        quickSort(A, p, q-1);
+        quickSort(A, q+1, r);
+    }
+}
+
+int main() {
+
+    constexpr size_t N = 8;
+
+    int array[N];
+  
+    cout << "Fill array:\n";
+    for(size_t i = 0; i < N; i++)
+        cin >> array[i];
+
+    cout << "Unsorted Array:\n";
+    for(size_t i = 0; i < N; i++)
+        cout << array[i] << " ";
+
+    cout << "\nSorted Array:\n";
+    quickSort(array, N-N, N);
+    for(size_t i = 0; i < N; i++)
+        cout << array[i] << " ";
+
+    return 0;
+}
+```
+
+*Complessità*: nel **caso medio** $O(n\log n)$ mentre nel **caso peggiore** $O(n^2)$
+*Vantaggio*: l'algoritmo è più efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
