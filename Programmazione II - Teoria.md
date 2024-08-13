@@ -523,23 +523,9 @@ using namespace std;
 
 int* init_Array() {
 
-    int* array = new int [N];
-
+	cout << "Enter array elements:\n";
     for(size_t i = 0; i < N; i++) {
-        
-        bool is_unique = true;
-        do {
-            array[i] = rand() % 20;
-            
-            // Check for duplicates
-            for (size_t j = 0; j < i; ++j) {
-            
-                if (array[j] == array[i]) {
-                    is_unique = false;
-                    break;
-                }
-            }
-        } while (!is_unique);
+        cin >> array[i];
     }
 
     return array;
@@ -547,6 +533,7 @@ int* init_Array() {
 
 void print_Array(int* array) {
 
+	cout << "\nArray:\n";
     for(size_t i = 0; i < N; i++) {
         cout << array[i] << "\t";
     }
@@ -577,28 +564,26 @@ void binary_Search(int *array, int key) {
     int start = 0;
     int end = N - 1;
 
-    while((found == false) && (start != end)) {
+    while(!found && (start != end)) {
         int midpoint = (start + end)/2;
         
         if (array[midpoint] == key) {
             found = true;
         } else if (key < array[midpoint]) {
-            end = midpoint - 1;
+            end = midpoint;
         } else {
             start = midpoint + 1;
         }
     }
 
     if(found) {
-        cout << key << "found.";
+        cout << key << " found.";
     } else {
-        cout << key << "not found.";
+        cout << key << " not found.";
     }
 }
 
 int main() {
-
-    srand(static_cast<unsigned>(time(NULL)));
     
     int *a = init_Array();
     cout << "Unsorted Array:\n";
@@ -614,6 +599,7 @@ int main() {
     binary_Search(a, key);  
 
     delete [] a;
+    a = nullptr;
 
     return 0;
 }
@@ -759,16 +745,10 @@ void insertion_sort(int array[]) {
     for(size_t i = 1; i < N; i++) {
         int temp = array[i];
 
-        int j = i;
+        size_t j = i;
         while((j > 0) && (temp < array[j - 1])) {
-
             array[j] = array[j - 1];
             j--;
-
-            cout << "\n\nArray:\n";
-            for(size_t k = 0; k < N; k++) {
-                cout << array[k] << " ";
-            }
         }
   
         array[j] = temp;
