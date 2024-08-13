@@ -1,382 +1,4 @@
 ***
-## OOP
-### Astrazione
->E' un procedimento che consente di semplificare la realtà che si vuole modellare. La semplificazione avviene concentrando l'attenzione solo sugli elementi importanti del sistema complesso preso in considerazione
-
-Terminologia:
-- **Astrarre** significa semplificare delle entità complesse in *oggetti caratterizzati dalle caratteristiche e dalle funzionalità essenziali* per gli scopi preposti
-
-### Information Hiding
->E' la capacità di una classe di incapsulare sia le caratteristiche (attributi) che i comportamenti (metodi) degli oggetti che rappresenta
-
-Limita di molto gli errori rispetto alla programmazione strutturata
-
-### Classe
->Una classe è un insieme di oggetti che condividono struttura e comportamento
-
-Essa contiene:
-- **attributi**, specifica dei dati che descrivono ogni oggetto che ne fa parte
-- **metodi**, descrizione delle azioni che l'oggetto stesso è capace di eseguire
-
-**Definizione**:
-```c++
-#include <iostream>
-using namespace std;
-
-// Definizione della classe
-class MyClass {
-private:
-    int data;
-
-public:
-    // Costruttore
-    MyClass(int data) : data(data) {}
-
-    // Metodo per ottenere il valore dei dati
-    int getData() const {
-        return data;
-    }
-
-    // Metodo per impostare il valore dei dati
-    void setData(int data) {
-        this->data = data;
-    }
-
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << endl;
-    }
-};
-
-int main() {
-    // Creazione di un oggetto della classe
-    MyClass obj(42);
-
-    // Utilizzo dei metodi della classe
-    obj.display();
-
-    obj.setData(100);
-    cout << "Updated Data: " << obj.getData() << endl;
-
-    return 0;
-}
-```
-
-#### Costruttore
->Ha lo stesso nome della classe e può avere qualunque numero di parametri. La particolarità è che non restituisce alcun tipo
-
-E' bene che un oggetto si possa auto-inizializzare a seguito della sua creazione, senza dovere effettuare una successiva chiamata ad una sua qualche funzione membro
-
-**N.B.**: C++ crea automaticamente un *costruttore di default* quando non vi sono altri costruttori, tuttavia esso non inizializza i membri della classe a valori predefiniti
-
-#### Distruttore
->E' un metodo speciale che viene chiamato automaticamente quando si distrugge un oggetto; serve per liberare la memoria assegnata dal costruttore
-
-Caratteristiche:
-- stesso nome della classe preceduta dal simbolo ~
-- non ha tipo di ritorno
-- non accetta parametri
-- non può essercene più di uno
-- se non si dichiara, C++ ne crea uno in automatico
-
-##### Header File
->Separare in files diversi il codice "cliente" della classe dal codice della classe
-
-##### Intestazione di classe
->Separare il codice sorgente di una classe in due files con lo stesso nome della classe
-- uno con la definizione della classe (solo prototipi dei metodi) ed estensione **.h**
-- un altro con le implementazioni dei metodi della classe ed estensione **.cpp**
-
-
-#### Template di classi e funzioni
-##### Template di Funzioni
->Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
-
-**Esempio**:
-```c++
-// swap function using a template
-
-template <typename T>
-void swap(int& x, int& y) {
-	T t = x;
-	x = y;
-	y = t;
-}
-```
-
-##### Template di Classi
-**Esempio**:
-```c++
-template <typename T>
-class MyClass {
-private:
-    T data;
-
-public:
-    // Costruttore
-    MyClass(T data) : data(data) {}
-
-    // Metodo per ottenere il valore dei dati
-    T getData() const {
-        return data;
-    }
-
-    // Metodo per impostare il valore dei dati
-    void setData(T data) {
-        this->data = data;
-    }
-
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << endl;
-    }
-};
-
-int main() {
-    // Creazione di oggetti della classe template con tipi diversi
-    MyClass<int> intObj(42);
-    MyClass<double> doubleObj(3.14);
-    MyClass<string> stringObj("Hello, World!");
-
-    // Utilizzo dei metodi della classe template
-    intObj.display();
-    doubleObj.display();
-    stringObj.display();
-
-    return 0;
-}
-
-```
-
-#### Ereditarietà e Polimorfismo
->Una classe derivata eredita attributi e metodi dalla classe base già esistente
-
-**Esempio**:
-```c++
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-// Super Classe
-class MyClass {
-protected:
-    int data;
-    string name;
-
-public:
-    // Costruttore con lista di inizializzazione
-    MyClass(int data, string name) : data(data), name(name) {}
-
-    // Metodo per ottenere il valore dei dati
-    int getData() const {
-        return data;
-    }
-
-    // Metodo per ottenere il nome
-    string getName() const {
-        return name;
-    }
-
-    // Metodo per impostare il valore dei dati
-    void setData(int data) {
-        this->data = data;
-    }
-
-    // Metodo per impostare il nome
-    void setName(string name) {
-        this->name = name;
-    }
-
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << ", Name: " << name << endl;
-    }
-};
-
-// Sotto Classe
-class DerivedClass : public MyClass {
-private:
-    double extraData;
-
-public:
-    // Costruttore con lista di inizializzazione che chiama il costruttore della classe base
-    DerivedClass(int data, string name, double extraData) : MyClass(data, name), extraData(extraData) {}
-
-    // Metodo per ottenere il valore di extraData
-    double getExtraData() const {
-        return extraData;
-    }
-
-    // Metodo per impostare il valore di extraData
-    void setExtraData(double extraData) {
-        this->extraData = extraData;
-    }
-
-    // Metodo per stampare i dati della classe derivata
-    void display() const {
-        // Chiamare il metodo display della classe base
-        MyClass::display();
-        cout << "Extra Data: " << extraData << endl;
-    }
-};
-
-int main() {
-    // Creazione di un oggetto della classe derivata
-    DerivedClass obj(42, "Example", 3.14);
-
-    // Utilizzo dei metodi della classe derivata
-    obj.display();
-
-    obj.setData(100);
-    obj.setName("Updated Example");
-    obj.setExtraData(6.28);
-    cout << "Updated Data: " << obj.getData() << ", Updated Name: " << obj.getName() << ", Updated Extra Data: " << obj.getExtraData() << endl;
-
-    // Utilizzo del metodo display della classe derivata
-    obj.display();
-
-    return 0;
-}
-```
-
-**N.B.**: elementi *public* e *protected* vengono ereditati con le stesse proprietà, dunque rimangono o publici o protetti
-
-#### Binding
->Si riferisce al collegamento tra una funzione chiamata e la funzione che viene effettivamente eseguita
-
-Può essere:
-- **statico**, se il collegamento avviene in fase di compilazione
-- **dinamico**, se il collegamento avviene durante l'esecuzione
-
-##### Binding Statico
-Questo tipo di binding è utilizzato per le funzioni **non** virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento della compilazione
-
-**Esempio**:
-```c++
-#include <iostream>
-using namespace std;
-
-class Base {
-public:
-    void show() {
-        cout << "Base::show() called" << endl;
-    }
-};
-
-class Derived : public Base {
-public:
-    void show() {
-        cout << "Derived::show() called" << endl;
-    }
-};
-
-int main() {
-    Base b;
-    Derived d;
-
-    b.show(); // Chiama Base::show()
-    d.show(); // Chiama Derived::show()
-
-    Base* ptr;
-    ptr = &d;
-    ptr->show(); // Chiama Base::show() (binding statico)
-
-    return 0;
-}
-```
-
-##### Binding Dinamico
-Questo tipo di binding è utilizzato per le funzioni virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento dell'esecuzione, non al momento della compilazione
-
-Per abilitarlo si utilizzano le *funzioni virtual*
-
-**Esempio**:
-```c++
-#include <iostream>
-using namespace std;
-
-class Base {
-public:
-    virtual void show() {
-        cout << "Base::show() called" << endl;
-    }
-};
-
-class Derived : public Base {
-public:
-    void show() override {
-        cout << "Derived::show() called" << endl;
-    }
-};
-
-int main() {
-    Base b;
-    Derived d;
-
-    b.show(); // Chiama Base::show()
-    d.show(); // Chiama Derived::show()
-
-    Base* ptr;
-    ptr = &d;
-    ptr->show(); // Chiama Derived::show() (binding dinamico)
-
-    return 0;
-}
-```
-
-#### Funzioni Virtual
-`virtual` anteposto alla dichiarazione di una funzione indica al compilatore che:
-- essa può essere definita in una classe derivata
-- la funzione potrà essere invocata tramite un puntatore
-
->Permettono a una classe base di definire funzioni che possono essere sovrascritte nelle classi derivate, con il comportamento corretto determinato a tempo di esecuzione
-
-**Esempio**:
-```c++
-// polimorfismo con funzioni virtual
-
-#include <iostream>
-using namespace std;
-
-class Shape {
-public:
-    virtual void draw() const {
-        cout << "Drawing Shape" << endl;
-    }
-
-    virtual ~Shape() {}
-};
-
-class Circle : public Shape {
-public:
-    void draw() const override {
-        cout << "Drawing Circle" << endl;
-    }
-};
-
-class Square : public Shape {
-public:
-    void draw() const override {
-        cout << "Drawing Square" << endl;
-    }
-};
-
-void renderShape(const Shape& shape) {
-    shape.draw();
-}
-
-int main() {
-    Circle circle;
-    Square square;
-
-    renderShape(circle); // Chiama Circle::draw()
-    renderShape(square); // Chiama Square::draw()
-
-    return 0;
-}
-```
-
 ### Complessità
 >La complessità di un algoritmo misura le risorse necessarie per eseguire l'algoritmo, solitamente in termini di tempo (complessità temporale) e spazio (complessità spaziale)
 
@@ -975,3 +597,392 @@ int main() {
 
 *Complessità*: nel **caso medio** $O(n\log n)$ mentre nel **caso peggiore** $O(n^2)$
 *Vantaggio*: l'algoritmo è più efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
+
+## OOP (Object Oriented Programming)
+I principi di base di questo paradigma di programmazione sono:
+- **astrazione**
+- **incapsulamento** (o **information hiding**)
+- **ereditarietà**
+- **polimorfismo**
+
+### Astrazione
+>E' un procedimento che consente di semplificare la realtà che si vuole modellare. La semplificazione avviene concentrando l'attenzione solo sugli elementi importanti del sistema complesso preso in considerazione
+
+Terminologia:
+- **Astrarre** significa semplificare delle entità complesse in *oggetti caratterizzati dalle caratteristiche e dalle funzionalità essenziali* per gli scopi preposti
+
+### Information Hiding
+>E' la capacità di una classe di incapsulare sia le caratteristiche (attributi) che i comportamenti (metodi) degli oggetti che rappresenta
+
+Limita di molto gli errori rispetto alla programmazione strutturata
+
+### Classe
+>Una classe è un insieme di oggetti che condividono struttura e comportamento
+
+Essa contiene:
+- **attributi**, specifica dei dati che descrivono ogni oggetto che ne fa parte
+- **metodi**, descrizione delle azioni che l'oggetto stesso è capace di eseguire
+
+**Definizione**:
+```c++
+#include <iostream>
+using namespace std;
+
+// Definizione della classe
+class MyClass {
+private:
+    int data;
+
+public:
+    // Costruttore
+    MyClass(int data) : data(data) {}
+
+    // Metodo per ottenere il valore dei dati
+    int getData() const {
+        return data;
+    }
+
+    // Metodo per impostare il valore dei dati
+    void setData(int data) {
+        this->data = data;
+    }
+
+    // Metodo per stampare i dati
+    void display() const {
+        cout << "Data: " << data << endl;
+    }
+};
+
+int main() {
+    // Creazione di un oggetto della classe
+    MyClass obj(42);
+
+    // Utilizzo dei metodi della classe
+    obj.display();
+
+    obj.setData(100);
+    cout << "Updated Data: " << obj.getData() << endl;
+
+    return 0;
+}
+```
+
+#### Costruttore
+>Ha lo stesso nome della classe e può avere qualunque numero di parametri. La particolarità è che non restituisce alcun tipo
+
+E' bene che un oggetto si possa auto-inizializzare a seguito della sua creazione, senza dovere effettuare una successiva chiamata ad una sua qualche funzione membro
+
+**N.B.**: C++ crea automaticamente un *costruttore di default* quando non vi sono altri costruttori, tuttavia esso non inizializza i membri della classe a valori predefiniti
+
+#### Distruttore
+>E' un metodo speciale che viene chiamato automaticamente quando si distrugge un oggetto; serve per liberare la memoria assegnata dal costruttore
+
+Caratteristiche:
+- stesso nome della classe preceduta dal simbolo ~
+- non ha tipo di ritorno
+- non accetta parametri
+- non può essercene più di uno
+- se non si dichiara, C++ ne crea uno in automatico
+
+##### Header File
+>Separare in files diversi il codice "cliente" della classe dal codice della classe
+
+##### Intestazione di classe
+>Separare il codice sorgente di una classe in due files con lo stesso nome della classe
+- uno con la definizione della classe (solo prototipi dei metodi) ed estensione **.h**
+- un altro con le implementazioni dei metodi della classe ed estensione **.cpp**
+
+
+#### Template di classi e funzioni
+##### Template di Funzioni
+>Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
+
+**Esempio**:
+```c++
+// swap function using a template
+
+template <typename T>
+void swap(int& x, int& y) {
+	T t = x;
+	x = y;
+	y = t;
+}
+```
+
+##### Template di Classi
+**Esempio**:
+```c++
+template <typename T>
+class MyClass {
+private:
+    T data;
+
+public:
+    // Costruttore
+    MyClass(T data) : data(data) {}
+
+    // Metodo per ottenere il valore dei dati
+    T getData() const {
+        return data;
+    }
+
+    // Metodo per impostare il valore dei dati
+    void setData(T data) {
+        this->data = data;
+    }
+
+    // Metodo per stampare i dati
+    void display() const {
+        cout << "Data: " << data << endl;
+    }
+};
+
+int main() {
+    // Creazione di oggetti della classe template con tipi diversi
+    MyClass<int> intObj(42);
+    MyClass<double> doubleObj(3.14);
+    MyClass<string> stringObj("Hello, World!");
+
+    // Utilizzo dei metodi della classe template
+    intObj.display();
+    doubleObj.display();
+    stringObj.display();
+
+    return 0;
+}
+
+```
+
+### Ereditarietà e Polimorfismo
+>Una classe derivata **eredita** attributi e metodi dalla classe base già esistente
+
+
+E' un ulteriore livello di astrazione che permette di avere un livello più alto rispetto a un interfaccia comune (*classe base*), grazie al al quale tutte le proprietà di questa classe vengono estese alle *classi derivate* (in quest'ultime si possono aggiungere nuove specifiche e funzionalità)
+
+>Il polimorfismo permette di avere funzioni che hanno la stessa firma ma assumono diversi comportamenti a seconda del chiamante
+
+**Esempio**:
+```c++
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Super Classe
+class MyClass {
+protected:
+    int data;
+    string name;
+
+public:
+    // Costruttore con lista di inizializzazione
+    MyClass(int data, string name) : data(data), name(name) {}
+
+    // Metodo per ottenere il valore dei dati
+    int getData() const {
+        return data;
+    }
+
+    // Metodo per ottenere il nome
+    string getName() const {
+        return name;
+    }
+
+    // Metodo per impostare il valore dei dati
+    void setData(int data) {
+        this->data = data;
+    }
+
+    // Metodo per impostare il nome
+    void setName(string name) {
+        this->name = name;
+    }
+
+    // Metodo per stampare i dati
+    void display() const {
+        cout << "Data: " << data << ", Name: " << name << endl;
+    }
+};
+
+// Sotto Classe
+class DerivedClass : public MyClass {
+private:
+    double extraData;
+
+public:
+    // Costruttore con lista di inizializzazione che chiama il costruttore della classe base
+    DerivedClass(int data, string name, double extraData) : MyClass(data, name), extraData(extraData) {}
+
+    // Metodo per ottenere il valore di extraData
+    double getExtraData() const {
+        return extraData;
+    }
+
+    // Metodo per impostare il valore di extraData
+    void setExtraData(double extraData) {
+        this->extraData = extraData;
+    }
+
+    // Metodo per stampare i dati della classe derivata
+    void display() const {
+        // Chiamare il metodo display della classe base
+        MyClass::display();
+        cout << "Extra Data: " << extraData << endl;
+    }
+};
+
+int main() {
+    // Creazione di un oggetto della classe derivata
+    DerivedClass obj(42, "Example", 3.14);
+
+    // Utilizzo dei metodi della classe derivata
+    obj.display();
+
+    obj.setData(100);
+    obj.setName("Updated Example");
+    obj.setExtraData(6.28);
+    cout << "Updated Data: " << obj.getData() << ", Updated Name: " << obj.getName() << ", Updated Extra Data: " << obj.getExtraData() << endl;
+
+    // Utilizzo del metodo display della classe derivata
+    obj.display();
+
+    return 0;
+}
+```
+
+**N.B.**: elementi *public* e *protected* vengono ereditati con le stesse proprietà, dunque rimangono o publici o protetti
+
+### Binding
+>Si riferisce al collegamento tra una funzione chiamata e la funzione che viene effettivamente eseguita
+
+Può essere:
+- **statico**, se il collegamento avviene in fase di compilazione
+- **dinamico**, se il collegamento avviene durante l'esecuzione
+
+##### Binding Statico
+Questo tipo di binding è utilizzato per le funzioni **non** virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento della compilazione
+
+**Esempio**:
+```c++
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    void show() {
+        cout << "Base::show() called" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void show() {
+        cout << "Derived::show() called" << endl;
+    }
+};
+
+int main() {
+    Base b;
+    Derived d;
+
+    b.show(); // Chiama Base::show()
+    d.show(); // Chiama Derived::show()
+
+    Base* ptr;
+    ptr = &d;
+    ptr->show(); // Chiama Base::show() (binding statico)
+
+    return 0;
+}
+```
+
+##### Binding Dinamico
+Questo tipo di binding è utilizzato per le funzioni virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento dell'esecuzione, non al momento della compilazione
+
+Per abilitarlo si utilizzano le *funzioni virtual*
+
+**Esempio**:
+```c++
+#include <iostream>
+using namespace std;
+
+class Base {
+public:
+    virtual void show() {
+        cout << "Base::show() called" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void show() override {
+        cout << "Derived::show() called" << endl;
+    }
+};
+
+int main() {
+    Base b;
+    Derived d;
+
+    b.show(); // Chiama Base::show()
+    d.show(); // Chiama Derived::show()
+
+    Base* ptr;
+    ptr = &d;
+    ptr->show(); // Chiama Derived::show() (binding dinamico)
+
+    return 0;
+}
+```
+
+#### Funzioni Virtual
+`virtual` anteposto alla dichiarazione di una funzione indica al compilatore che:
+- essa può essere definita in una classe derivata
+- la funzione potrà essere invocata tramite un puntatore
+
+>Permettono a una classe base di definire funzioni che possono essere sovrascritte nelle classi derivate, con il comportamento corretto determinato a tempo di esecuzione
+
+**Esempio**:
+```c++
+// polimorfismo con funzioni virtual
+
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual void draw() const {
+        cout << "Drawing Shape" << endl;
+    }
+
+    virtual ~Shape() {}
+};
+
+class Circle : public Shape {
+public:
+    void draw() const override {
+        cout << "Drawing Circle" << endl;
+    }
+};
+
+class Square : public Shape {
+public:
+    void draw() const override {
+        cout << "Drawing Square" << endl;
+    }
+};
+
+void renderShape(const Shape& shape) {
+    shape.draw();
+}
+
+int main() {
+    Circle circle;
+    Square square;
+
+    renderShape(circle); // Chiama Circle::draw()
+    renderShape(square); // Chiama Square::draw()
+
+    return 0;
+}
+```
