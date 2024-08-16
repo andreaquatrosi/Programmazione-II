@@ -648,7 +648,7 @@ public:
     }
 
     // Metodo esterno per stampare i dati
-    void display();
+    void display() const;
 };
 
 void MyClass::display() const {
@@ -701,6 +701,89 @@ Caratteristiche:
 - un altro con le implementazioni dei metodi della classe ed estensione **.cpp**
 
 #### Static, Const e Friend
+##### 1. Static
+Generalmente, una variabile dichiarata all'interno di una funzione ha uno *scope* limitato al corpo della stessa
+
+Per far sì che il valore della variabile permanga in memoria e in tutte le chiamate successive alla funzione stessa bisogna aggiungere la keyword `static`, che precede la classica dichiarazione di una variabile
+
+**Codice**:
+```c++
+#include <iostream>
+
+using namespace std;
+
+void foo() {
+
+    static size_t a = 0;
+    cout << a++ << endl;
+}
+
+int main() {
+
+    for(size_t i = 0; i < 5; i++) {
+        foo();
+    }
+   // cout << a << "\n";
+
+    return 0;
+}
+```
+
+**N.B.**: il valore della variabile `a` dichiarata nel corpo della funzione `foo` viene incrementato ogni volta che la funzione stessa viene chiamata
+**N.B.**$_{2}$: non posso utilizzare la variabile `a` al di fuori della funzione, per cui la riga $726$ produce un *errore* a tempo di compilazione
+
+###### OOP e `static`
+Nella OOP, la variabile `static` conserva le stesse caratteristiche, ma la dichiarazione avviene al di fuori della classe stessa (non *inline*)
+
+**Codice**:
+```c++
+#include <iostream>
+
+using namespace std;
+
+class Test {
+
+    private:
+        static size_t a;
+
+    public:
+        Test() {
+            a++;
+        }
+
+        void print() const {
+        
+            cout << a << endl;
+        }
+};
+
+size_t Test::a = 0;
+  
+int main() {
+
+    Test test[3];
+
+    for(size_t i = 0; i < 3; i++)
+        test[i].print();
+
+    return 0;
+}
+```
+
+##### 2. Const
+L'operatore `const` permette di rendere il valore di una variabile, o funzione immutabile, aggiungendo la keyword che precede la classica dichiarazione di una variabile
+
+##### 3. Friend
+La keyword `friend` permette di fornire ad una funzione o ad una classe esterna accesso ai membri privati e protetti della classe in cui appare
+
+
+
+
+
+
+
+
+
 
 #### Template di classi e funzioni
 ##### Template di Funzioni
