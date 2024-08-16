@@ -623,7 +623,7 @@ Essa contiene:
 - **attributi**, specifica dei dati che descrivono ogni oggetto che ne fa parte
 - **metodi**, descrizione delle azioni che l'oggetto stesso è capace di eseguire
 
-**Definizione**:
+**Codice**:
 ```c++
 #include <iostream>
 using namespace std;
@@ -635,23 +635,25 @@ private:
 
 public:
     // Costruttore
-    MyClass(int data) : data(data) {}
+    MyClass(int d) : data(d) {}
 
-    // Metodo per ottenere il valore dei dati
+    // Metodo inline per ottenere il valore dei dati
     int getData() const {
         return data;
     }
 
-    // Metodo per impostare il valore dei dati
+    // Metodo inline per impostare il valore dei dati
     void setData(int data) {
         this->data = data;
     }
 
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << endl;
-    }
+    // Metodo esterno per stampare i dati
+    void display();
 };
+
+void MyClass::display() const {
+    cout << "Data: " << data << endl;
+}
 
 int main() {
     // Creazione di un oggetto della classe
@@ -667,12 +669,18 @@ int main() {
 }
 ```
 
+>L'**oggetto** è un'*istanza* della classe che viene allocata in memoria
+
 #### Costruttore
->Ha lo stesso nome della classe e può avere qualunque numero di parametri. La particolarità è che non restituisce alcun tipo
+>E' il metodo responsabile dell'istanziazione di un oggetto
 
-E' bene che un oggetto si possa auto-inizializzare a seguito della sua creazione, senza dovere effettuare una successiva chiamata ad una sua qualche funzione membro
+Caratteristiche:
+- ha lo stesso nome della classe
+- non ha tipo di ritorno
+- inizializza i valori degli attributi
 
-**N.B.**: C++ crea automaticamente un *costruttore di default* quando non vi sono altri costruttori, tuttavia esso non inizializza i membri della classe a valori predefiniti
+**N.B.**: E' bene che un oggetto si possa auto-inizializzare a seguito della sua creazione, senza dovere effettuare una successiva chiamata ad una sua qualche funzione membro
+**N.B.**$_{2}$: C++ crea automaticamente un *costruttore di default* quando non vi sono altri costruttori, tuttavia esso non inizializza i membri della classe a valori predefiniti
 
 #### Distruttore
 >E' un metodo speciale che viene chiamato automaticamente quando si distrugge un oggetto; serve per liberare la memoria assegnata dal costruttore
@@ -691,6 +699,26 @@ Caratteristiche:
 >Separare il codice sorgente di una classe in due files con lo stesso nome della classe
 - uno con la definizione della classe (solo prototipi dei metodi) ed estensione **.h**
 - un altro con le implementazioni dei metodi della classe ed estensione **.cpp**
+
+#### Static, Const e Friend
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #### Template di classi e funzioni
