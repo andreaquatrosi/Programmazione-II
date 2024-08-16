@@ -702,25 +702,6 @@ Caratteristiche:
 
 #### Static, Const e Friend
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### Template di classi e funzioni
 ##### Template di Funzioni
 >Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
