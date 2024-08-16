@@ -605,13 +605,13 @@ I principi di base di questo paradigma di programmazione sono:
 - **ereditarietà**
 - **polimorfismo**
 
-### Astrazione
+### 1. Astrazione
 >E' un procedimento che consente di semplificare la realtà che si vuole modellare. La semplificazione avviene concentrando l'attenzione solo sugli elementi importanti del sistema complesso preso in considerazione
 
 Terminologia:
 - **Astrarre** significa semplificare delle entità complesse in *oggetti caratterizzati dalle caratteristiche e dalle funzionalità essenziali* per gli scopi preposti
 
-### Information Hiding
+### 2. Information Hiding
 >E' la capacità di una classe di incapsulare sia le caratteristiche (attributi) che i comportamenti (metodi) degli oggetti che rappresenta
 
 Limita di molto gli errori rispetto alla programmazione strutturata
@@ -753,13 +753,12 @@ int main() {
 
 ```
 
-### Ereditarietà e Polimorfismo
+### 3. Ereditarietà e 4. Polimorfismo
 >Una classe derivata **eredita** attributi e metodi dalla classe base già esistente
-
 
 E' un ulteriore livello di astrazione che permette di avere un livello più alto rispetto a un interfaccia comune (*classe base*), grazie al al quale tutte le proprietà di questa classe vengono estese alle *classi derivate* (in quest'ultime si possono aggiungere nuove specifiche e funzionalità)
 
->Il polimorfismo permette di avere funzioni che hanno la stessa firma ma assumono diversi comportamenti a seconda del chiamante
+>Il **polimorfismo** permette di avere funzioni che hanno la stessa firma ma assumono diversi comportamenti a seconda del chiamante
 
 **Esempio**:
 ```c++
