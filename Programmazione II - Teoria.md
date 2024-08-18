@@ -776,15 +776,6 @@ L'operatore `const` permette di rendere il valore di una variabile, o funzione i
 ##### 3. Friend
 La keyword `friend` permette di fornire ad una funzione o ad una classe esterna accesso ai membri privati e protetti della classe in cui appare
 
-
-
-
-
-
-
-
-
-
 #### Template di classi e funzioni
 ##### Template di Funzioni
 >Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
