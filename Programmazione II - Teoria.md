@@ -776,6 +776,22 @@ L'operatore `const` permette di rendere il valore di una variabile, o funzione i
 ##### 3. Friend
 La keyword `friend` permette di fornire ad una funzione o ad una classe esterna accesso ai membri privati e protetti della classe in cui appare
 
+Un utilizzo della funzione friend avviene tramite l'*overloading* dell'operatore di stampa di una classe:
+```c++
+class MyClass {
+	private:
+		int var;
+
+	public:
+		A() : var(0) {}
+
+		friend ostream& operator << (ostream& os, const MyClass& myObj) {
+			os << "I'm MyClass's attribute: " << myObj.var << "\n";
+			return os;
+		}
+};
+```
+
 #### Template di classi e funzioni
 ##### Template di Funzioni
 >Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
