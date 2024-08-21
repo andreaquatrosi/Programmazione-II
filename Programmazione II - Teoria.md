@@ -484,6 +484,9 @@ void merge(int* A, size_t p, size_t q, size_t r) {
 
 void mergeSort(int* A, size_t p, size_t r) {
 
+	// p = left
+	// r = right
+	// q = middle
     if(p < r) {
         size_t q = (p+r)/2; // suddivido l'array in due parti
         
@@ -564,6 +567,9 @@ int partition(int* A, size_t p, size_t r) {
 
 void quickSort(int* A, size_t p, size_t r) {
 
+	// p = left
+	// r = right
+	// q = middle
     if(p < r) {
         int q = partition(A, p, r);
         
