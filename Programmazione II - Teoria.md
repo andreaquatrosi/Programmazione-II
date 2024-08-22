@@ -798,170 +798,24 @@ class MyClass {
 };
 ```
 
-#### Template di classi e funzioni
-##### Template di Funzioni
->Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
-
-**Esempio**:
-```c++
-// swap function using a template
-
-template <typename T>
-void swap(int& x, int& y) {
-	T t = x;
-	x = y;
-	y = t;
-}
-```
-
-##### Template di Classi
-**Esempio**:
-```c++
-template <typename T>
-class MyClass {
-private:
-    T data;
-
-public:
-    // Costruttore
-    MyClass(T data) : data(data) {}
-
-    // Metodo per ottenere il valore dei dati
-    T getData() const {
-        return data;
-    }
-
-    // Metodo per impostare il valore dei dati
-    void setData(T data) {
-        this->data = data;
-    }
-
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << endl;
-    }
-};
-
-int main() {
-    // Creazione di oggetti della classe template con tipi diversi
-    MyClass<int> intObj(42);
-    MyClass<double> doubleObj(3.14);
-    MyClass<string> stringObj("Hello, World!");
-
-    // Utilizzo dei metodi della classe template
-    intObj.display();
-    doubleObj.display();
-    stringObj.display();
-
-    return 0;
-}
-
-```
-
-### 3. Ereditarietà e 4. Polimorfismo
+### 3. Ereditarietà
 >Una classe derivata **eredita** attributi e metodi dalla classe base già esistente
 
 E' un ulteriore livello di astrazione che permette di avere un livello più alto rispetto a un interfaccia comune (*classe base*), grazie al al quale tutte le proprietà di questa classe vengono estese alle *classi derivate* (in quest'ultime si possono aggiungere nuove specifiche e funzionalità)
 
+### 4. Polimorfismo
 >Il **polimorfismo** permette di avere funzioni che hanno la stessa firma ma assumono diversi comportamenti a seconda del chiamante
 
-**Esempio**:
-```c++
-#include <iostream>
-#include <string>
+E' la caratteristica grazie al quale oggetti di classi diverse rispondono in maniera diversa a uno stesso metodo
 
-using namespace std;
+E' fondamentale associare il concetto di **binding**
 
-// Super Classe
-class MyClass {
-protected:
-    int data;
-    string name;
-
-public:
-    // Costruttore con lista di inizializzazione
-    MyClass(int data, string name) : data(data), name(name) {}
-
-    // Metodo per ottenere il valore dei dati
-    int getData() const {
-        return data;
-    }
-
-    // Metodo per ottenere il nome
-    string getName() const {
-        return name;
-    }
-
-    // Metodo per impostare il valore dei dati
-    void setData(int data) {
-        this->data = data;
-    }
-
-    // Metodo per impostare il nome
-    void setName(string name) {
-        this->name = name;
-    }
-
-    // Metodo per stampare i dati
-    void display() const {
-        cout << "Data: " << data << ", Name: " << name << endl;
-    }
-};
-
-// Sotto Classe
-class DerivedClass : public MyClass {
-private:
-    double extraData;
-
-public:
-    // Costruttore con lista di inizializzazione che chiama il costruttore della classe base
-    DerivedClass(int data, string name, double extraData) : MyClass(data, name), extraData(extraData) {}
-
-    // Metodo per ottenere il valore di extraData
-    double getExtraData() const {
-        return extraData;
-    }
-
-    // Metodo per impostare il valore di extraData
-    void setExtraData(double extraData) {
-        this->extraData = extraData;
-    }
-
-    // Metodo per stampare i dati della classe derivata
-    void display() const {
-        // Chiamare il metodo display della classe base
-        MyClass::display();
-        cout << "Extra Data: " << extraData << endl;
-    }
-};
-
-int main() {
-    // Creazione di un oggetto della classe derivata
-    DerivedClass obj(42, "Example", 3.14);
-
-    // Utilizzo dei metodi della classe derivata
-    obj.display();
-
-    obj.setData(100);
-    obj.setName("Updated Example");
-    obj.setExtraData(6.28);
-    cout << "Updated Data: " << obj.getData() << ", Updated Name: " << obj.getName() << ", Updated Extra Data: " << obj.getExtraData() << endl;
-
-    // Utilizzo del metodo display della classe derivata
-    obj.display();
-
-    return 0;
-}
-```
-
-**N.B.**: elementi *public* e *protected* vengono ereditati con le stesse proprietà, dunque rimangono o publici o protetti
-
-### Binding
->Si riferisce al collegamento tra una funzione chiamata e la funzione che viene effettivamente eseguita
+#### Binding
+>Si riferisce all'associazione tra una funzione chiamata e la funzione che viene effettivamente eseguita
 
 Può essere:
-- **statico**, se il collegamento avviene in fase di compilazione
-- **dinamico**, se il collegamento avviene durante l'esecuzione
+- **statico**, se l'associazione avviene a *tempo di compilazione*
+- **dinamico**, se l'associazione avviene a *tempo di esecuzione*
 
 ##### Binding Statico
 Questo tipo di binding è utilizzato per le funzioni **non** virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento della compilazione
@@ -972,18 +826,18 @@ Questo tipo di binding è utilizzato per le funzioni **non** virtuali. Le funzio
 using namespace std;
 
 class Base {
-public:
-    void show() {
-        cout << "Base::show() called" << endl;
-    }
-};
+	public:
+	    void show() {
+	        cout << "Base::show() called" << endl;
+	    }
+	};
 
 class Derived : public Base {
-public:
-    void show() {
-        cout << "Derived::show() called" << endl;
-    }
-};
+	public:
+	    void show() {
+	        cout << "Derived::show() called" << endl;
+	    }
+	};
 
 int main() {
     Base b;
@@ -1039,6 +893,9 @@ int main() {
 }
 ```
 
+**N.B.**: elementi *public* vengono ereditati con le stesse proprietà, dunque rimangono o publici o protetti. 
+Ciò non vale nel caso in cui l'ereditarietà è di tipo *protected* o *private*, poiché viene alterato lo scope degli elementi **public** nella classe madre ad uno dei due, in base alla specifica, nella classe derivata
+
 #### Funzioni Virtual
 `virtual` anteposto alla dichiarazione di una funzione indica al compilatore che:
 - essa può essere definita in una classe derivata
@@ -1049,31 +906,31 @@ int main() {
 **Esempio**:
 ```c++
 // polimorfismo con funzioni virtual
-
 #include <iostream>
+
 using namespace std;
 
 class Shape {
-public:
-    virtual void draw() const {
-        cout << "Drawing Shape" << endl;
-    }
-
-    virtual ~Shape() {}
+	public:
+	    virtual void draw() const {
+	        cout << "Drawing Shape" << endl;
+	    }
+	
+	    virtual ~Shape() {}
 };
 
 class Circle : public Shape {
-public:
-    void draw() const override {
-        cout << "Drawing Circle" << endl;
-    }
+	public:
+	    void draw() const override {
+	        cout << "Drawing Circle" << endl;
+	    }
 };
 
 class Square : public Shape {
-public:
-    void draw() const override {
-        cout << "Drawing Square" << endl;
-    }
+	public:
+	    void draw() const override {
+	        cout << "Drawing Square" << endl;
+	    }
 };
 
 void renderShape(const Shape& shape) {
@@ -1089,4 +946,207 @@ int main() {
 
     return 0;
 }
+```
+
+**Esercizio di Riassunto**:
+```c++
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+
+using namespace std;
+
+// Definizione della classe
+class MyClass {
+
+    private:
+        int data;
+        char* name;
+        static size_t counter;
+
+    public:
+        // Default
+        MyClass() : data(0), name(nullptr) {
+            
+            name = new char [1];
+            name[0] = '\0';
+        }                      
+        
+        // Parametrized
+        MyClass(int d, const char* name) : data(d), name(new char [strlen(name) + 1]) {
+
+            strcpy(this->name, name);
+            counter++;
+        }    
+
+        // Copy
+        MyClass(MyClass& obj) {  
+
+            data = obj.get_Data();
+            strcpy(name, obj.get_Name());
+            counter++;
+        }
+
+        ~MyClass() {
+
+            delete [] name;
+        }
+
+        // Getter
+        int get_Data() const { return data; }
+
+        char* get_Name() const { return name; }
+
+        // Setter
+        void set_Data(int data) { this->data = data; }
+
+        void set_Name(const char* name) {
+
+            delete [] this->name;
+
+            this->name = new char [strlen(name) + 1];
+            strcpy(this->name, name);
+        }
+
+        // Metodo esterno per stampare i dati
+        /*virtual*/ void display() const;
+
+        // Friend
+        friend void add_data(int to_add, MyClass& obj);
+};
+
+void MyClass::display() const {
+
+    cout << "MyClass::display()"
+         << "\nData: " << data
+         << "\nName: " << name
+         << "\n";
+}
+
+size_t MyClass::counter = 0;
+
+// Friend
+void add_data(int to_add, MyClass& obj) {
+
+    obj.data += to_add;
+}
+
+class MyDerivedClass : public MyClass {
+
+    private:
+        double extraData;
+
+    public:
+        // Parametrized Constructor
+        // chiama il costruttore della classe base
+
+        MyDerivedClass(int data, char* name, double extraData) : MyClass(data, name), extraData(extraData) {}
+
+        ~MyDerivedClass() {}
+
+        // Getter
+        double get_extraData() const { return extraData; }
+
+        // Setter
+        void set_extraData(double extraData) { this->extraData = extraData; }
+
+        // Metodo
+        void display() const {
+        
+            MyClass::display();
+            cout << "MyDerivedClass::display()"
+                 << "\nExtra Data: " << extraData
+                 << "\n";
+        }
+};
+
+int main() {
+
+    // Creazione di un oggetto della classe MyClass
+    MyClass obj_b(42, "Andrea");
+
+    // Utilizzo dei metodi della classe
+    obj_b.display();
+    obj_b.set_Data(100);
+    cout << "\nUpdated Data: " << obj_b.get_Data() << endl;
+    
+    cout << "\nUpdated Data using add_data()\n";
+    add_data(10, obj_b);  // add_data() è una funzione friend
+    obj_b.display();
+
+    // Creazione di un oggetto della classe MyDerivedClass
+    char* name = new char [10];
+    strcpy(name, "Andrea");
+    cout << "\nCalling display() in the derived object\n";
+    MyDerivedClass obj_d(69, name, 420.69);
+
+    obj_d.display();
+
+    // Ptr
+    cout << "\nUsing pointer to MyDerivedClass\n";
+    MyClass* ptr = &obj_d;
+    ptr->display();         // Chiama MyClass::display() (binding statico)
+                            // Aggiungere "virtual" alla riga 53 per chiamare MyDerivedClass::display() (binding dinamico)
+
+    return 0;
+}
+```
+
+#### Template di classi e funzioni
+##### Template di Funzioni
+>Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
+
+**Esempio**:
+```c++
+// swap function using a template
+template <typename T>       // Sintassi
+void swap(int& x, int& y) {
+	T t = x;
+	x = y;
+	y = t;
+}
+```
+
+##### Template di Classi
+**Esempio**:
+```c++
+template <typename T>
+class MyClass {
+private:
+    T data;
+
+public:
+    // Costruttore
+    MyClass(T data) : data(data) {}
+
+    // Metodo per ottenere il valore dei dati
+    T getData() const {
+        return data;
+    }
+
+    // Metodo per impostare il valore dei dati
+    void setData(T data) {
+        this->data = data;
+    }
+
+    // Metodo per stampare i dati
+    void display() const {
+        cout << "Data: " << data << endl;
+    }
+};
+
+int main() {
+    // Creazione di oggetti della classe template con tipi diversi
+    MyClass<int> intObj(42);
+    MyClass<double> doubleObj(3.14);
+    MyClass<string> stringObj("Hello, World!");
+
+    // Utilizzo dei metodi della classe template
+    intObj.display();
+    doubleObj.display();
+    stringObj.display();
+
+    return 0;
+}
+
 ```
