@@ -1150,3 +1150,8 @@ int main() {
 }
 
 ```
+
+### Strutture Dati
+#### Liste
+##### 1. Liste Linkate Semplici
+##### 2. Liste Doppiamente  Linkate
