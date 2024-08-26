@@ -1159,15 +1159,14 @@ int main() {
 
 La differenza con l'array è che la lista *non viene preallocata* ma viene popolata a tempo di esecuzione poiché non ha una dimensione prefissata
 
-##### 1. Liste Linkate Semplici
 La lista ha come elementi costitutivi dei **nodi** che contengono:
 - un **valore**
 - un **puntatore** al *nodo successivo*
 
-Quindi:
+##### 1. Liste Linkate Semplici
 >E' una sequenza di nodi in cui ogni nodo ha un valore e un collegamento all'elemento successivo
 
-Esempio:
+**Esempio**:
 - ![[Pasted image 20240824155336.png|350]]
 In termini di codice, una lista è formata da una **head**, un puntatore al primo elemento della lista, e da una **tail**, un puntatore a `nullptr` ossia la fine della lista
 
@@ -1394,3 +1393,19 @@ int main() {
 ```
 
 ##### 2. Liste Doppiamente  Linkate
+>Sono liste che hanno un collegamento sia al nodo successivo che al nodo precedente
+
+Il nodo sarà costituito da:
+- un **valore**
+- un **puntatore** all'elemento *successivo*
+- un **puntatore** all'elemento *precedente*
+
+La lista, invece, conterrà oltre al puntatore alla head, un **puntatore** alla *tail*
+
+**Esempio**:
+- ![[Pasted image 20240826123824.png|350]]
+
+**Implementazione**:
+```c++
+
+```
