@@ -1407,5 +1407,361 @@ La lista, invece, conterrà oltre al puntatore alla head, un **puntatore** alla 
 
 **Implementazione**:
 ```c++
+#include <iostream>
 
+using namespace std;  
+
+template <typename T>
+class Node {
+
+    private:
+        T value;
+        Node<T>* next;
+        Node<T>* prev;
+
+    public:
+        Node() : value(T()), next(nullptr), prev(nullptr) {}
+        Node(T value) : value(value), next(nullptr), prev(nullptr) {}
+
+        // Getter
+        T get_value() const { return value; }
+        Node<T>* get_next() const { return next; }
+        Node<T>* get_prev() const { return prev; }
+
+        // Setter
+        void set_value(T value) { this->value = value; }
+        void set_next(Node<T>* next) { this->next = next; }
+        void set_prev(Node<T>* prev) { this->prev = prev; }
+};
+
+template <typename T>
+class List {
+
+    private:
+        Node<T>* head;
+        Node<T>* tail;
+
+    public:
+        List() : head(nullptr), tail(nullptr) {}
+
+        ~List() {
+        
+            Node<T>* current = head;
+            Node<T>* nextNode;
+  
+            while (current != nullptr) {
+                nextNode = current->get_next();
+                delete current;
+                current = nextNode;
+            }
+        }
+
+        // Operazioni
+        bool is_Empty() const { return head == nullptr; }
+
+        void push_head(T value) {
+
+            Node<T>* newNode = new Node<T>(value);  
+            
+            if(this->is_Empty()) {
+                head = newNode;
+            } else {
+                newNode->set_next(head);
+                head->set_prev(newNode);
+                head = newNode;
+            }
+        }
+
+        void push_tail(T value) {
+
+            Node<T>* newNode = new Node<T>(value);  
+
+            if(this->is_Empty()) {
+                head = newNode;
+            } else {
+                Node<T>* temp = head;
+
+                while(temp->get_next() != nullptr)
+                    temp = temp->get_next();
+                    
+                temp->set_next(newNode);
+                newNode->set_prev(temp);
+            }
+        }
+
+        void push_sorted(T value) {
+
+            Node<T>* newNode = new Node<T>(value);  
+
+            if(this->is_Empty() || value < head->get_value()) {
+                newNode->set_next(head);
+
+                if(head != nullptr)
+                    head->set_prev(newNode);
+
+                head = newNode;
+            } else {
+                Node<T>* current = head;
+
+                while(current->get_next() != nullptr && value > current->get_next()->get_value())
+                    current = current->get_next();
+
+                newNode->set_next(current->get_next());  
+
+                if(current->get_next() != nullptr)
+                    current->get_next()->set_prev(newNode);
+
+                current->set_next(newNode);
+                newNode->set_prev(current);
+            }      
+        }
+
+        T extract_head() {  
+
+            if(this->is_Empty()) {
+                cout << "\nThe list's empty!\n";
+                exit(EXIT_FAILURE);
+            } else {
+
+                Node<T>* temp = head;
+                T value = head->get_value();
+                head = head->get_next();
+
+                if(head != nullptr)
+                    head->set_prev(nullptr);
+
+                delete temp;
+
+                return value;
+            }
+        }
+
+        T extract_tail() {
+
+            if(this->is_Empty()) {
+                cout << "\nThe list's empty!\n";
+                exit(EXIT_FAILURE);
+            } else {
+
+                Node<T>* temp = head;
+
+                while(temp->get_next() != nullptr)
+                    temp = temp->get_next();
+                
+                T value = temp->get_value();
+
+                if(temp->get_prev() != nullptr)
+                    temp->get_prev()->set_next(nullptr);
+                else
+                    head = nullptr;
+
+                delete temp;
+
+                return value;
+            }
+        }
+
+        bool extract_element(T value) {
+
+            if(this->is_Empty()) {
+                cout << "\nThe list's empty\n";
+                exit(EXIT_FAILURE);
+            } else {
+
+                Node<T>* temp = head;
+
+                while(temp != nullptr && value != temp->get_value())
+                    temp = temp->get_next();
+
+                if(temp == nullptr)
+                    return false;
+                if(temp->get_prev() != nullptr)
+                    temp->get_prev()->set_next(temp->get_next());
+                else    
+                    head = temp->get_next();    // element is in the head
+
+                if(temp->get_next() != nullptr)
+                    temp->get_next()->set_prev(temp->get_prev());
+
+                delete temp;
+
+                return true;
+            }
+        }
+
+        void print() const {
+
+            Node<T>* current = head;
+
+            while(current != nullptr) {
+                cout << current->get_value() << " -> ";
+                current = current->get_next();
+            }
+
+            cout << "nullptr\n";
+        }
+};
+
+int main() {
+
+    List<int> list;
+    /*
+    list.push_head(69);
+    list.push_tail(420);
+    list.push_head(90);
+    list.push_tail(45);
+    */
+    
+    list.push_sorted(50);
+    list.push_sorted(20);
+    list.push_sorted(60);
+    list.push_sorted(30);
+    list.push_sorted(40);
+
+    list.print();
+
+    list.extract_head();
+    list.extract_tail();
+    list.extract_element(30);
+    
+    list.print();
+
+    return 0;
+}
 ```
+
+#### Pila e Coda
+##### Pila (o Stack)
+>E' una struttura dati astratta nel quale le operazioni di inserimento e rimozione avvengono sempre dalla *cima della pila*
+
+E' una struttura dati di tipo **LIFO** (**L**ast **I**n **F**irst **O**ut), ossia l'ultimo elemento inserito è il primo rimosso
+
+Gli elementi costitutivi della pila sono:
+- una **dimensione**
+- un **puntatore** alla *head*
+
+Per i metodi si ha:
+- `push()`, aggiungere un elemento in cima
+- `pop()`, estrarre un elemento dalla cima
+- `is_empty()`, controllare se la pila è vuota
+
+**Implementazione**:
+```c++
+#include <iostream>
+
+using namespace std;
+
+// class Node goes here...
+
+// class List goes here...
+
+template <typename T>
+class Stack {
+    private:
+        List<T> list; // Usa la lista per implementare la pila
+
+    public:
+        // Aggiunge un elemento in cima alla pila
+        void push(T value) {
+            list.push_head(value);
+        }
+
+        // Rimuove e restituisce l'elemento in cima alla pila
+        T pop() {
+            return list.extract_head();
+        }
+
+        // Controlla se la pila è vuota
+        bool is_empty() const {
+            return list.is_Empty();
+        }
+
+        // Stampa gli elementi nella pila
+        void print_stack() const {
+            list.print_list();
+        }
+};
+
+int main() {
+    Stack<int> stack;
+    
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+
+    stack.print_stack();
+
+    cout << "Elemento rimosso: " << stack.pop() << endl;
+    stack.print_stack();
+
+    return 0;
+}
+```
+
+##### Coda (o Queue)
+>E' una struttura dati astratta nel quale le operazioni di inserimento e rimozione avvengono da due *lati diversi della coda*
+
+E' una struttura dati di tipo **FIFO** (**F**irst **I**n **F**irst **O**ut), ossia il primo elemento inserito è il primo rimosso
+
+Gli elementi costitutivi della coda sono:
+- una **dimensione**
+- un **puntatore** alla *head*
+- un **puntatore** alla *tail*
+
+Per i metodi si ha:
+- `enqueue()`, inserimento in coda
+- `dequeue()`, estrazione dalla coda
+
+**Implementazione**:
+```c++
+#include <iostream>
+
+using namespace std;
+
+// class Node goes here...
+// class List goes here...
+
+template <typename T>
+class Queue {
+    private:
+        List<T> list; // Usa la lista per implementare la coda
+
+    public:
+        // Aggiunge un elemento in fondo alla coda
+        void enqueue(T value) {
+            list.push_tail(value);
+        }
+
+        // Rimuove e restituisce l'elemento all'inizio della coda
+        T dequeue() {
+            return list.extract_head();
+        }
+
+        // Controlla se la coda è vuota
+        bool is_empty() const {
+            return list.is_Empty();
+        }
+
+        // Stampa gli elementi nella coda
+        void print_queue() const {
+            list.print_list();
+        }
+};
+
+int main() {
+    Queue<int> queue;
+    
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
+
+    queue.print_queue();
+
+    cout << "Elemento rimosso: " << queue.dequeue() << endl;
+    queue.print_queue();
+
+    return 0;
+}
+```
+
+### Alberi Binari e di Ricerca
