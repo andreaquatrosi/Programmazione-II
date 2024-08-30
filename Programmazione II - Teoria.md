@@ -52,7 +52,7 @@ Esistono tre tipi di notazione asintotica:
 - $\theta$
 
 ##### Notazione $O$
-Definisce il *limite asintotico superiore* e si applica a delle funzioni $f$ con un limite asintotico superiore costituito dalla funzione di costo $g(n)$:
+Definisce il *limite asintotico superiore* e si applica a delle funzioni $f(n)$ con un limite asintotico superiore costituito dalla funzione di costo $g(n)$:
 - si denota con $O(g(n)) = \{f(n) :\exists c, n_0\space|\space 0\leq f(n) \leq c\cdot g(n)\space\forall n\geq n_0\}$
 - ![[Pasted image 20240528115417.png|350]]
 
@@ -65,7 +65,7 @@ Si può stabilire una relazione tra $f(n)$ e $O(g(n))$:
 Nella valutazione degli algoritmi si va a valutare la notazione $O$ dando un **limite superiore** ad uno dei tre casi
 
 Attraverso la notazione $O()$ gli algoritmi vengono suddivisi in classi di equivalenza. Si hanno così algoritmi (funzioni) di *complessità di ordine*:
-- **costante** 
+- **costante**
 	- $O(1)$ ossia la complessità di una funzione o blocco istruzioni ciascuna di costo $O(1)$, che non contengono cicli, ricorsione o chiamate ad altre funzioni non costanti
 - **logaritmica**
 	- $O(\log n)$, ossia la complessità di un ciclo quando le sue variabili sono incrementate o decrementate moltiplicandole o dividendole per una costante
@@ -676,6 +676,8 @@ int main() {
 ```
 
 >L'**oggetto** è un'*istanza* della classe che viene allocata in memoria
+
+**N.B.**: i metodi **non** occupano spazio nell'istanza di un oggetto mentre gli attributi sì
 
 #### Costruttore
 >E' il metodo responsabile dell'istanziazione di un oggetto
@@ -1764,4 +1766,83 @@ int main() {
 }
 ```
 
-### Alberi Binari e di Ricerca
+## Alberi Binari e di Ricerca
+### Alberi Binari
+>Un **albero** è un grafo diretto in cui ogni nodo può avere un solo arco entrante e un qualunque numero di archi
+
+Un nodo si dice:
+- **foglia**, se non ha archi uscenti
+- **radice**, se non ha archi entranti
+
+Un *albero* è una struttura dati costituita da:
+- una radice
+- dei **rami**, gli archi dei nodi
+- delle foglie
+
+**Esempio**:
+- ![[Pasted image 20240829120612.png|350]]
+
+Per ogni **nodo**, i cerchi rappresentati nell'immagine con all'interno le lettere, si può stabilire una gerarchia *genitore*-*figlio*:
+- il nodo $R$ rappresenta la *radice*
+- i nodi $F$ rappresentano i *figli* della radice
+- i nodi $N$ rappresentano i *nipoti* della radice
+	- sono le *foglie* poiché non hanno figli 
+
+**N.B.**: dato che si tratta di alberi binari, i nodi possono avere al più due figli o due archi uscenti
+
+#### Caratteristiche e Proprietà
+1. **Altezza e Livello dell'albero**
+
+Sono due concetti strettamente collegati:
+- il *livello dell'albero* è l'indice di profondità; la radice si trova al livello $0$, i suoi figli al livello $1$, ecc...
+- l'*altezza dell'albero* è il numero di livelli totali oppure la lunghezza del suo cammino più lungo aumentata di uno
+
+Esempio:
+- ![[Pasted image 20240829120552.png|350]]
+
+2. **Numero Massimo di Nodi**
+
+Trattandosi di alberi binari, il conto per trovare il numero massimo di nodi conoscendo l'altezza dell'albero è:
+- $n\leq 2^h-1$
+	- $h$ è l'altezza dell'albero
+	- $n$ è il numero di nodi
+
+Un albero che ha esattamente $2^h-1$ nodi si dice **completo**, come quello nell'immagine precedente
+
+3. **Albero Bilanciato**
+
+>Un **sottoalbero** è l'albero che, fissato un nodo, *ha come radice il figlio del nodo*
+
+Un albero si dice bilanciato quando la differenza tra l'altezza tra i due sottoalberi della radice è al più uno
+
+**Esempio**:
+- ![[Pasted image 20240830123546.png|350]]
+
+**N.B.**: il sottoalbero di sinistra ha un indice di profondità (livello) maggiore rispetto al sottoalbero di destra di uno, dunque questo albero può dirsi bilanciato
+
+### Alberi Binari di Ricerca
+Gli **Alberi Binari di Ricerca** (o **BST** $\to$ **B**inary **S**earch **T**rees) sono alberi che hanno la seguente costituzione:
+- per ogni nodo dell'albero, i valori del suo sottoalbero sinistro sono *minori del valore stesso*
+- per ogni nodo dell'albero, i valori del suo sottoalbero destro sono *maggiori del valore stesso*
+
+**Esempio**:
+- *BST*
+	- ![[Pasted image 20240830124757.png|250]]
+- *Non BST*
+	- ![[Pasted image 20240830124817.png|250]]
+
+
+E' importante capire cos'è la **chiave di un nodo**:
+>La **chiave di un nodo** in un albero binario, e in particolare in un albero binario di ricerca (BST), è il valore associato al nodo stesso 
+
+-  Questi valori, o chiavi, determinano la posizione del nodo all'interno dell'albero secondo regole specifiche
+
+**Implementazione**:
+```c++
+// class NodeBST
+```
+
+```c++
+// class BST
+```
+
