@@ -1846,3 +1846,40 @@ E' importante capire cos'è la **chiave di un nodo**:
 // class BST
 ```
 
+#### Visita dell'Albero
+L'albero può essere visitato in tre modi diversi:
+- visita **preorder**
+- visita **postorder**
+- visita **inorder**
+
+Queste tre visite hanno in comune il fatto di essere procedure ricorsive, che si applicano ad ogni nodo
+
+##### Visita PreoOrder
+Prevede i seguenti passi:
+- visitare la *radice*
+- visitare il *sottoalbero sinistro*
+- visitare il *sottoalbero destro*
+
+**Esempio**:
+- ![[Pasted image 20240901122514.png|350]]
+- $10-4-2-1-3-6-5-7-16-12-14-18$
+
+##### Visita PostOrder
+Prevede i seguenti passi:
+- visitare il *sottoalbero sinistro*
+- visitare il *sottoalbero destro*
+- visitare la *radice*
+
+**Esempio**:
+- ![[Pasted image 20240901122902.png|350]]
+- $1-3-2-5-7-6-4-14-12-18-16-10$
+
+##### Visita InOrder
+Prevede i seguenti passi:
+- visitare il *sottoalbero sinistro*
+- visitare la *radice*
+- visitare il *sottoalbero destro*
+
+**Esempio**:
+- ![[Pasted image 20240901123105.png|350]]
+- $1-2-3-4-5-6-7-10-12-14-16-18$
