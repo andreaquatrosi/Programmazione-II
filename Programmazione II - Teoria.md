@@ -135,34 +135,6 @@ Si effettua una ricerca su un array già ordinato. Questa è un informazione imp
 
 **Algoritmo**:
 ```c++
-#include <iostream>
-#include <cstdlib>
-#include <time.h>
-
-#define N 10
-
-using namespace std;  
-
-int* init_Array() {
-
-	cout << "Enter array elements:\n";
-    for(size_t i = 0; i < N; i++) {
-        cin >> array[i];
-    }
-
-    return array;
-}
-
-void print_Array(int* array) {
-
-	cout << "\nArray:\n";
-    for(size_t i = 0; i < N; i++) {
-        cout << array[i] << "\t";
-    }
-
-    cout << endl;
-}
-
 void sort_Array(int* array) {
 
     int temp = 0;
@@ -204,27 +176,6 @@ void binary_Search(int *array, int key) {
         cout << key << " not found.";
     }
 }
-
-int main() {
-    
-    int *a = init_Array();
-    cout << "Unsorted Array:\n";
-    print_Array(a);
-    
-    cout << "Sorted Array:\n";
-    sort_Array(a);
-    print_Array(a);
-
-    int key;
-    cin >> key;
-
-    binary_Search(a, key);  
-
-    delete [] a;
-    a = nullptr;
-
-    return 0;
-}
 ```
 
 #### Algoritmi Iterativi o di Ordinamento
@@ -232,13 +183,6 @@ L'algoritmo di ordinamento classico che si utilizza computa eseguendo un confron
 
 **Algoritmo**:
 ```c++
-#include <iostream>
-#include <random>
-
-#define N 10
-
-using namespace std;  
-
 template <typename T> void my_swap(T& a, T&b) {
     
     T t = a;
@@ -256,33 +200,6 @@ template <typename T> void sorting(T* array, int n) {
         }
     }
 }
-
-int main(){
-    
-    int array[N];
-    // double array[N];
-
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dis(1, 10);
-
-    for(int i = 0; i < N; i++)
-        array[i] = dis(gen);
-    
-    cout << "Unsorted array:\n";
-    for(int i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    sorting(array, N);
-
-    cout << "\nSorted array:\n";
-    for(int i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    return 0;
-}
 ```
 
 ##### Selection Sort
@@ -297,15 +214,10 @@ Si ripete il procedimento per la lunghezza dell'array
 
 **Algoritmo**:
 ```c++
-#include <iostream>
+template <typename T>
+void swap(T& a, T& b) {
 
-#define N 5  
-
-using namespace std;
-
-void swap(int& a, int& b) {
-
-    int t = a;
+    T t = a;
     a = b;
     b = t;
 }
@@ -324,30 +236,6 @@ void selection_sort(int array[]) {
         swap(array[i], array[index_min]);
     }
 }
-
-int main() {
-
-    int array[N];  
-
-    cout << "Enter array elements:\n";
-    for(size_t i = 0; i < N; i++) {
-        cin >> array[i];
-    }
-
-    cout << "Unsorted Array:\n";
-    for(size_t i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    selection_sort(array);
-
-    cout << "\nSorted Array:\n";
-    for(size_t i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    return 0;
-}
 ```
 
 ##### Insertion Sort
@@ -356,12 +244,6 @@ Quest'algoritmo prevede l'utilizzo di una variabile temporanea che immagazina un
 Si ripete questa logica e queste operazioni finché l'array non è ordinato
 
 ```c++
-#include <iostream>
-
-#define N 5  
-
-using namespace std;
-
 void insertion_sort(int array[]) {
 
     for(size_t i = 1; i < N; i++) {
@@ -376,33 +258,10 @@ void insertion_sort(int array[]) {
         array[j] = temp;
     }
 }
-
-int main() {
-
-    int array[N];
-
-    for(size_t i = 0; i < N; i++) {
-        cin >> array[i];
-    }
-
-    cout << "Unsorted Array:\n";
-    for(size_t i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    insertion_sort(array);
-
-    cout << "\n\nSorted Array:\n";
-    for(size_t i = 0; i < N; i++) {
-        cout << array[i] << " ";
-    }
-
-    return 0;
-}
 ```
 
 *Complessità*: $O(n^2)$
-*Vantaggio*: e fico
+*Vantaggio*: è fico
 
 #### Algoritmi Ricorsivi di Ordinamento
 Rispetto agli *algoritmi di ordinamento iterativi* sono più efficienti, in termini di complessità. Si basano sulla ricorsione e sulla logica *dividi et impera*
@@ -531,6 +390,9 @@ Si sviluppa nel seguente modo:
 
 **N.B.**: lo scopo del pivot è di posizionarlo nella sua posizione ordinata finale, mettendo gli elementi minori a sinistra e maggiori a destra
 
+*Complessità*: nel **caso medio** $O(n\log n)$ mentre nel **caso peggiore** $O(n^2)$
+*Vantaggio*: l'algoritmo è più efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
+
 **Algoritmo**:
 ```c++
 #include <iostream>
@@ -600,9 +462,6 @@ int main() {
     return 0;
 }
 ```
-
-*Complessità*: nel **caso medio** $O(n\log n)$ mentre nel **caso peggiore** $O(n^2)$
-*Vantaggio*: l'algoritmo è più efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
 
 ## OOP (Object Oriented Programming)
 I principi di base di questo paradigma di programmazione sono:
@@ -1150,7 +1009,6 @@ int main() {
 
     return 0;
 }
-
 ```
 
 ### Strutture Dati
@@ -1180,182 +1038,179 @@ using namespace std;
 
 template <typename T>
 class Node {
-
     private:
         T value;
         Node<T>* next;
-        
+
     public:
         Node() : value(T()), next(nullptr) {}
         Node(T value) : value(value), next(nullptr) {}
-       
-		// Getter
+
+        // Getter
         T get_value() const { return value; }
-        Node<T>* get_next() const { return this->next; }
+        Node<T>* get_next() { return next; }
 
         // Setter
-        void set_next(Node<T>* next) { this->next = next; } 
+        void set_value(const T value) { this->value = value; }
+        void set_next(Node<T>* next) { this->next = next; }
 };
 
 template <typename T>
 class List {
-
     private:
         Node<T>* head;
-
-	public:
+        
+    public:
         List() : head(nullptr) {}
 
         ~List() {
-  
-			Node<T>* current = head;
+            Node<T>* current = head;
             Node<T>* nextNode;
-  
+
             while(current != nullptr) {
                 nextNode = current->get_next();
                 delete current;
                 current = nextNode;
             }
+
+            delete nextNode;
         }
 
         // Operazioni
-        bool is_Empty() { return head == nullptr; }
+        bool is_empty() { return head == nullptr; }
 
-        void push_head(T value) {
-
+        void push_head(const T value) {
             Node<T>* newNode = new Node<T>(value);
 
-            if(this->is_Empty()) {
-                newNode->set_next(head);
+            if(this->is_empty()) {
                 head = newNode;
-            } else {
-                newNode->set_next(head);
-                head = newNode;
+                return;
             }
+
+            newNode->set_next(head);
+            head = newNode;
         }
 
-        void push_tail(T value) {
+        void push_tail(const T value) {
 
-            Node<T>* newNode = new Node<T>(value);
-
-            if(this->is_Empty()) {
-                newNode->set_next(head);
-                head = newNode;
-            } else {
-                Node<T>* temp = head;
-                
-                while(temp->get_next() != nullptr)
-                    temp = temp->get_next();
-
-                temp->set_next(newNode);
-            }
-        }
-
-        void push_sorted(T value) {
-        
             Node<T>* newNode = new Node<T>(value);
   
-            if(this->is_Empty() || value < head->get_value()) {
+            if(this->is_empty()) {
+                head = newNode;
+                return;
+            }
+
+            Node<T>* current = head;
+
+            while(current->get_next() != nullptr)
+                current = current->get_next();
+
+            current->set_next(newNode);
+        }
+
+        void push_sorted(const T value) {
+
+            Node<T>* newNode = new Node<T>(value);  
+
+            if(this->is_empty() || value < head->get_value()) {
                 newNode->set_next(head);
                 head = newNode;
-            } else {
-                Node<T>* current = head;
-                Node<T>* prev = nullptr;
-
-                while(current != nullptr && current->get_value() < value) {
-                    prev = current;
-                    current = current->get_next();
-                }
-
-                newNode->set_next(current);
-                if(prev != nullptr)
-                    prev->set_next(newNode);
+                return;
             }
+
+            Node<T>* current = head;
+            Node<T>* prev = nullptr;
+
+            while(current != nullptr && value > current->get_value()) {
+                prev = current;
+                current = current->get_next();
+            }
+
+            newNode->set_next(current);
+
+            if(prev != nullptr)
+                prev->set_next(newNode);
         }
 
         T extract_head() {
-
-            if(this->is_Empty()) {
-                cout << "\nEmpty list!\n";
+        
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
-                Node<T>* temp = head;
-                
-                T value = head->get_value();
-                head = head->get_next();
 
-                delete temp;
-                
-                return value;
-            }
+            Node<T>* temp = head;
+
+            T value = head->get_value();
+            head = head->get_next();
+
+            delete temp;
+  
+            return value;
         }
 
         T extract_tail() {
 
-            if(this->is_Empty()) {
-                cout << "\nEmpty list!\n";
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
-                Node<T>* temp = head;
-                Node<T>* prev = nullptr;
-  
-                while(temp->get_next() != nullptr) {
-                    prev = temp;
-                    temp = temp->get_next();
-                }
 
-                T value = temp->get_value();
-
-                if(prev != nullptr)
-                    prev->set_next(nullptr);
-                else
-                    head = nullptr; // the list has only one element
-
-                delete temp;  
-
-                return value;
+            Node<T>* temp = head;
+            Node<T>* prev = nullptr;
+            
+            while(temp->get_next() != nullptr) {
+                prev = temp;
+                temp = temp->get_next();
             }
+
+            T value = temp->get_value();
+
+            if(prev != nullptr)
+                prev->set_next(nullptr);
+
+            delete temp;  
+
+            return value;
         }
 
         bool extract_element(T value) {
 
-            if(this->is_Empty()) {
-                cout << "\nEmpty list!\n";
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
-                if(value == head->get_value()) {
-                    extract_head();
-                    return true;
-                }
 
-                Node<T>* temp = head;
-                Node<T>* prev = nullptr;
-
-                while(temp != nullptr && value != temp->get_value()) {
-                    prev = temp;
-                    temp = temp->get_next();
-                }
-
-                if(temp == nullptr)
-                    return false;
-
-                prev->set_next(temp->get_next());
-                
-                delete temp;
-
+            if(value == head->get_value()) {
+                extract_head();
                 return true;
             }
-        }
-  
-        void print_list() const {
 
             Node<T>* temp = head;
+            Node<T>* prev = nullptr;
 
-            while(temp != nullptr) {
-                cout << temp->get_value() << " -> ";
+            while(temp != nullptr && value != temp->get_value()) {
+                prev = temp;
                 temp = temp->get_next();
             }
-  
+
+            if(temp == nullptr) // not found
+                return false;
+
+            // found
+            if(prev != nullptr)
+                prev->set_next(temp->get_next());
+            else
+                head = head->get_next();
+
+            delete temp;  
+
+            return true;
+        }
+
+        void print_list() const {  
+
+            Node<T>* current = head;
+
+            while(current != nullptr) {
+                cout << current->get_value() << " -> ";
+                current = current->get_next();
+            }
+
             cout << "nullptr\n";
         }
 };
@@ -1364,33 +1219,30 @@ int main() {
 
     List<int> list;
 
-    /*list.push_head(69);
-    list.push_tail(420);
-    list.push_head(90);
-    list.push_tail(45);
+    list.push_head(5);
+    list.push_head(7);
+    list.push_head(1);
+    list.push_head(4);
+    list.push_head(9);
+
+    list.print_list();
   
+    list.extract_head();
+    list.print_list();
+  
+    list.extract_tail();
     list.print_list();
 
-    int value1 = list.extract_head();
+    list.extract_element(1);
     list.print_list();
 
-    int value2 = list.extract_tail();
+    list.push_sorted(5);
+    list.push_sorted(1);
+    list.push_sorted(9);
+
     list.print_list();
 
-    list.push_tail(42);
-    list.push_tail(100);
-    list.print_list();
-    
-    int value3 = list.extract_element(42);*/
-
-    list.push_sorted(50);
-    list.push_sorted(20);
-    list.push_sorted(60);
-    list.push_sorted(30);
-    list.push_sorted(40);
-    list.print_list();
-
-    return 0;d
+    return 0;
 }
 ```
 
@@ -1411,34 +1263,32 @@ La lista, invece, conterrà oltre al puntatore alla head, un **puntatore** alla 
 ```c++
 #include <iostream>
 
-using namespace std;  
+using namespace std;
 
 template <typename T>
 class Node {
-
     private:
         T value;
         Node<T>* next;
         Node<T>* prev;
 
     public:
-        Node() : value(T()), next(nullptr), prev(nullptr) {}
-        Node(T value) : value(value), next(nullptr), prev(nullptr) {}
+        Node() : value(T()), next(nullptr) {}
+        Node(T value) : value(value), next(nullptr) {}
 
         // Getter
         T get_value() const { return value; }
-        Node<T>* get_next() const { return next; }
-        Node<T>* get_prev() const { return prev; }
+        Node<T>* get_next() { return next; }
+        Node<T>* get_prev() { return prev; }
 
         // Setter
-        void set_value(T value) { this->value = value; }
+        void set_value(const T value) { this->value = value; }
         void set_next(Node<T>* next) { this->next = next; }
         void set_prev(Node<T>* prev) { this->prev = prev; }
 };
 
 template <typename T>
 class List {
-
     private:
         Node<T>* head;
         Node<T>* tail;
@@ -1447,151 +1297,158 @@ class List {
         List() : head(nullptr), tail(nullptr) {}
 
         ~List() {
-        
             Node<T>* current = head;
             Node<T>* nextNode;
   
-            while (current != nullptr) {
-                nextNode = current->get_next();
+            while(current != nullptr) {
+                nextNode = current->get_next();
                 delete current;
                 current = nextNode;
             }
+
+            delete nextNode;
         }
 
         // Operazioni
-        bool is_Empty() const { return head == nullptr; }
+        bool is_empty() { return head == nullptr; }
 
-        void push_head(T value) {
-
-            Node<T>* newNode = new Node<T>(value);  
+        void push_head(const T value) {
             
-            if(this->is_Empty()) {
-                head = newNode;
-            } else {
-                newNode->set_next(head);
-                head->set_prev(newNode);
-                head = newNode;
+            Node<T>* newNode = new Node<T>(value);
+            
+            if(this->is_empty()) {
+                head = tail = newNode;
+                return;
             }
+
+            newNode->set_next(head);
+            head->set_prev(newNode);
+            head = newNode;
         }
 
-        void push_tail(T value) {
+        void push_tail(const T value) {
 
-            Node<T>* newNode = new Node<T>(value);  
+            Node<T>* newNode = new Node<T>(value);
 
-            if(this->is_Empty()) {
-                head = newNode;
-            } else {
-                Node<T>* temp = head;
-
-                while(temp->get_next() != nullptr)
-                    temp = temp->get_next();
-                    
-                temp->set_next(newNode);
-                newNode->set_prev(temp);
+            if(this->is_empty()) {
+                head = tail = newNode;
+                return;
             }
+
+            tail->set_next(newNode);
+            newNode->set_prev(tail);
+            tail = newNode;
         }
 
-        void push_sorted(T value) {
+        void push_sorted(const T value) {
 
-            Node<T>* newNode = new Node<T>(value);  
+            Node<T>* newNode = new Node<T>(value);
 
-            if(this->is_Empty() || value < head->get_value()) {
+            if(this->is_empty() || value < head->get_value()) {
                 newNode->set_next(head);
-
+                
                 if(head != nullptr)
                     head->set_prev(newNode);
 
                 head = newNode;
-            } else {
+
+                if(tail == nullptr)
+                    tail = newNode;
+            }
+
+            else if(value > tail->get_value()) {
+                tail->set_next(newNode);
+                newNode->set_prev(tail);
+                tail = newNode;
+            }
+
+            else {
                 Node<T>* current = head;
 
-                while(current->get_next() != nullptr && value > current->get_next()->get_value())
+                while(current->get_next() != nullptr && value > current->get_next()->get_value()) {
                     current = current->get_next();
+                }
 
-                newNode->set_next(current->get_next());  
+                newNode->set_next(current->get_next());
 
-                if(current->get_next() != nullptr)
+                if(current->get_next() != nullptr) {
                     current->get_next()->set_prev(newNode);
-
+                }
                 current->set_next(newNode);
                 newNode->set_prev(current);
-            }      
+            }
         }
 
-        T extract_head() {  
+        T extract_head() {
 
-            if(this->is_Empty()) {
-                cout << "\nThe list's empty!\n";
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
 
-                Node<T>* temp = head;
-                T value = head->get_value();
-                head = head->get_next();
+            Node<T>* temp = head;
 
-                if(head != nullptr)
-                    head->set_prev(nullptr);
+            T value = head->get_value();
+            head = head->get_next();
 
-                delete temp;
+            if(head != nullptr)
+                head->set_prev(nullptr);
+            else
+                tail = nullptr;
 
-                return value;
-            }
+            delete temp;  
+
+            return value;
         }
 
         T extract_tail() {
 
-            if(this->is_Empty()) {
-                cout << "\nThe list's empty!\n";
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
 
-                Node<T>* temp = head;
+            Node<T>* temp = tail;
 
-                while(temp->get_next() != nullptr)
-                    temp = temp->get_next();
-                
-                T value = temp->get_value();
+            T value = tail->get_value();
+            tail = tail->get_prev();
 
-                if(temp->get_prev() != nullptr)
-                    temp->get_prev()->set_next(nullptr);
-                else
-                    head = nullptr;
+            if(tail != nullptr)
+                tail->set_next(nullptr);
+            else
+                head = nullptr;
 
-                delete temp;
+            delete temp;  
 
-                return value;
-            }
+            return value;
         }
 
         bool extract_element(T value) {
 
-            if(this->is_Empty()) {
-                cout << "\nThe list's empty\n";
+            if(this->is_empty())
                 exit(EXIT_FAILURE);
-            } else {
+                
+            Node<T>* temp = head;
 
-                Node<T>* temp = head;
+            while(temp != nullptr && value != temp->get_value())
+                temp = temp->get_next();
+                
+            if(temp == nullptr) // not found
+                return false;
 
-                while(temp != nullptr && value != temp->get_value())
-                    temp = temp->get_next();
+            // found
+            if(temp->get_prev() != nullptr)
+                temp->get_prev()->set_next(temp->get_next());
+            else
+                head = temp->get_next();    // element is in the head
 
-                if(temp == nullptr)
-                    return false;
-                if(temp->get_prev() != nullptr)
-                    temp->get_prev()->set_next(temp->get_next());
-                else    
-                    head = temp->get_next();    // element is in the head
+            if(temp->get_next() != nullptr)
+                temp->get_next()->set_prev(temp->get_prev());
+            else
+                tail = temp->get_prev();    // element is in the tail
 
-                if(temp->get_next() != nullptr)
-                    temp->get_next()->set_prev(temp->get_prev());
+            delete temp;
 
-                delete temp;
-
-                return true;
-            }
+            return true;
         }
 
-        void print() const {
+        void print_list() const {
 
             Node<T>* current = head;
 
@@ -1607,26 +1464,20 @@ class List {
 int main() {
 
     List<int> list;
-    /*
-    list.push_head(69);
-    list.push_tail(420);
-    list.push_head(90);
-    list.push_tail(45);
-    */
-    
+
     list.push_sorted(50);
     list.push_sorted(20);
     list.push_sorted(60);
     list.push_sorted(30);
     list.push_sorted(40);
 
-    list.print();
+    list.print_list();
 
     list.extract_head();
     list.extract_tail();
     list.extract_element(30);
-    
-    list.print();
+
+    list.print_list();
 
     return 0;
 }
@@ -1840,10 +1691,180 @@ E' importante capire cos'è la **chiave di un nodo**:
 **Implementazione**:
 ```c++
 // class NodeBST
+template <typename T>
+class Node {
+    private:
+        T key;
+        Node<T>* left;
+        Node<T>* right;
+
+    public:
+        Node() : key(T()), left(nullptr), right(nullptr) {}
+        Node(T key) : key(key), left(nullptr), right(nullptr) {}
+
+        // Getter
+        T get_key() const { return key; }
+        Node<T>*& get_left() { return left; }
+        Node<T>*& get_right() { return right; }
+
+        // Setter
+        void set_key(const T key) { this->key = key; }
+        void set_left(Node<T>* left) { this->left = left; }
+        void set_right(Node<T>* right) { this->right = right; }
+};
 ```
 
 ```c++
 // class BST
+template <typename T>
+class BST {
+    private:
+        Node<T>* root;
+
+        void add_node(Node<T>*& root, const T& key) {
+
+            if(!root) {
+                Node<T>* newNode = new Node<T>(key);
+                root = newNode;
+
+                return;
+            }
+
+            if(key < root->get_key())
+                add_node(root->get_left(), key);
+            else if(key > root->get_key())
+                add_node(root->get_right(), key);
+        }
+
+        void delete_node(Node<T>*& root, const T& key) {
+
+            if (!root)
+                return;
+
+            if (key < root->get_key())
+                delete_node(root->get_left(), key);
+            else if (key > root->get_key())
+                delete_node(root->get_right(), key);
+            else {
+                Node<T>* toDelete = nullptr;
+
+                if (!root->get_right() && !root->get_left()) {     // node has no children (leaf)
+                    delete root;
+                    root = nullptr;
+                }
+
+                else if (!root->get_left()) {                      // node has only right children
+                    toDelete = root;
+                    root = root->get_right();
+
+                    delete toDelete;
+                }
+
+                else if (!root->get_right()) {                    // node has only left children
+                    toDelete = root;
+                    root = root->get_left();
+
+                    delete toDelete;
+                }
+
+                else {                                            // node has both left and right children
+                    Node<T>* smallestRight = get_minNode(root->get_right());
+
+                    root->set_key(smallestRight->get_key());
+                    delete_node(root->get_right(), smallestRight->get_key());
+                }
+            }
+        }
+
+        Node<T>* get_maxNode(Node<T>* root) {
+
+            Node<T>* current = root;
+            
+            /* since it's a BST, all (key > root) will be the right node*/
+            while(current->get_right())
+                current = current->get_right();
+
+            return current;
+        }
+
+        Node<T>* get_minNode(Node<T>* root) {
+
+            Node<T>* current = root;  
+
+            /* since it's a BST, all (key < root) will be the left node*/
+            while(current->get_left())
+                current = current->get_left();
+
+            return current;
+        }
+
+        void inOrder(Node<T>* root) const {
+
+            if(!root)
+                return;
+
+            inOrder(root->get_left());
+            cout << root->get_key() << " ";
+            inOrder(root->get_right());
+        }
+
+        void preOrder(Node<T>* root) const {
+
+            if(!root)
+                return;
+
+            cout << root->get_key() << " ";
+            preOrder(root->get_left());
+            preOrder(root->get_right());
+        }
+
+        void postOrder(Node<T>* root) const {  
+
+            if(!root)
+                return;
+
+            postOrder(root->get_left());
+            postOrder(root->get_right());
+            cout << root->get_key() << " ";
+        }
+
+        Node<T>* search_node(Node<T>*& root, const T& key) {  
+
+            if(!root)
+                return nullptr;
+
+            if(key < root->get_key())
+                return search_node(root->get_left(), key);
+            else if(key > root->get_key())
+                return search_node(root->get_right(), key);
+            else
+                return root;
+        }
+
+    public:
+        BST() : root(nullptr) {}
+
+        // Methods
+        void add_node(const T& key) {
+            add_node(root, key);
+        }
+
+        void delete_node(const T& key) {
+            delete_node(root, key);
+        }
+
+        void inOrder() const {
+            inOrder(root);
+        }
+
+        void preOrder() const {
+            preOrder(root);
+        }
+
+        void postOrder() const {
+            postOrder(root);
+        }
+};
 ```
 
 #### Visita dell'Albero
