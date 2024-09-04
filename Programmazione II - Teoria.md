@@ -954,8 +954,12 @@ int main() {
 ```
 
 #### Template di classi e funzioni
-##### Template di Funzioni
 >Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
+
+Il template implementa il concetto di *tipo parametrizzato*
+
+##### Template di Funzioni
+>Sono funzioni inn grado di operare su tipi generici
 
 **Esempio**:
 ```c++
@@ -969,6 +973,10 @@ void swap(int& x, int& y) {
 ```
 
 ##### Template di Classi
+>Sono classi che hanno membri che usano i parametri del template come tipi
+
+Il compilatore genera una classe diversa per ogni tipo per cui è richiesta la specializzazione
+
 **Esempio**:
 ```c++
 template <typename T>
@@ -1015,13 +1023,17 @@ int main() {
 >Sono entità astratte con comportamenti predefiniti per *organizzare dati*
 
 #### Liste
->E' una sequenza di elementi i quali sono collegati l'uno all'altro
+Vengono chiamati **insiemi dinamici**, insiemi manipolati dagli algoritmi che possono crescere, ridursi o cambiare nel tempo
+
+>E' un insieme dinamico in cui una sequenza di elementi sono collegati l'uno all'altro da un puntatore
 
 La differenza con l'array è che la lista *non viene preallocata* ma viene popolata a tempo di esecuzione poiché non ha una dimensione prefissata
 
+*Vantaggio*: le liste si prestano bene a implementare sequenze dinamiche
+
 La lista ha come elementi costitutivi dei **nodi** che contengono:
 - un **valore**
-- un **puntatore** al *nodo successivo*
+- uno o più **puntatori**
 
 ##### 1. Liste Linkate Semplici
 >E' una sequenza di nodi in cui ogni nodo ha un valore e un collegamento all'elemento successivo
@@ -1625,6 +1637,8 @@ int main() {
 ### Alberi Binari
 >Un **albero** è un grafo diretto in cui ogni nodo può avere un solo arco entrante e un qualunque numero di archi
 
+**N.B.**: un grafo diretto è un insieme di nodi collegati mediante archi direzionati
+
 Un nodo si dice:
 - **foglia**, se non ha archi uscenti
 - **radice**, se non ha archi entranti
@@ -1686,6 +1700,8 @@ Gli **Alberi Binari di Ricerca** (o **BST** $\to$ **B**inary **S**earch **T**ree
 - *Non BST*
 	- ![[Pasted image 20240830124817.png|250]]
 
+*Tipologia* di albero:
+- **albero binario degenere**, se ogni nodo diverso da una foglia ha un solo figlio (si assume che l'albero vuoto sia degenere)
 
 E' importante capire cos'è la **chiave di un nodo**:
 >La **chiave di un nodo** in un albero binario, e in particolare in un albero binario di ricerca (BST), è il valore associato al nodo stesso 
@@ -1871,6 +1887,8 @@ class BST {
 };
 ```
 
+La **ricerca di un elemento** di un BST ha *complessità* $O(h)$, dove $h$ è l'indice di profondità dell'albero (ossia il livello)
+
 #### Visita dell'Albero
 L'albero può essere visitato in tre modi diversi:
 - visita **preorder**
@@ -1878,6 +1896,8 @@ L'albero può essere visitato in tre modi diversi:
 - visita **inorder**
 
 Queste tre visite hanno in comune il fatto di essere procedure ricorsive, che si applicano ad ogni nodo
+
+*Complessità*: $\Theta(n)$
 
 ##### Visita PreoOrder
 Prevede i seguenti passi:
