@@ -1026,6 +1026,8 @@ La lista ha come elementi costitutivi dei **nodi** che contengono:
 ##### 1. Liste Linkate Semplici
 >E' una sequenza di nodi in cui ogni nodo ha un valore e un collegamento all'elemento successivo
 
+Consentono di collegare fra loro nodi generati dinamicamente per costruire *liste semplici*
+
 **Esempio**:
 - ![[Pasted image 20240824155336.png|350]]
 In termini di codice, una lista è formata da una **head**, un puntatore al primo elemento della lista, e da una **tail**, un puntatore a `nullptr` ossia la fine della lista
@@ -1248,6 +1250,8 @@ int main() {
 
 ##### 2. Liste Doppiamente  Linkate
 >Sono liste che hanno un collegamento sia al nodo successivo che al nodo precedente
+
+Consentono di collegare fra loro nodi generati dinamicamente per costruire *liste doppiamente concatenate* 
 
 Il nodo sarà costituito da:
 - un **valore**
@@ -1664,7 +1668,7 @@ Un albero che ha esattamente $2^h-1$ nodi si dice **completo**, come quello nell
 
 >Un **sottoalbero** è l'albero che, fissato un nodo, *ha come radice il figlio del nodo*
 
-Un albero si dice bilanciato quando la differenza tra l'altezza tra i due sottoalberi della radice è al più uno
+Un albero si dice **bilanciato** quando la differenza tra l'altezza tra i due sottoalberi della radice è al più uno
 
 **Esempio**:
 - ![[Pasted image 20240830123546.png|350]]
