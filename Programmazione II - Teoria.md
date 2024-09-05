@@ -67,11 +67,11 @@ Nella valutazione degli algoritmi si va a valutare la notazione $O$ dando un **l
 Attraverso la notazione $O()$ gli algoritmi vengono suddivisi in classi di equivalenza. Si hanno così algoritmi (funzioni) di *complessità di ordine*:
 - **costante**
 	- $O(1)$ ossia la complessità di una funzione o blocco istruzioni ciascuna di costo $O(1)$, che non contengono cicli, ricorsione o chiamate ad altre funzioni non costanti
-- **logaritmica**
-	- $O(\log n)$, ossia la complessità di un ciclo quando le sue variabili sono incrementate o decrementate moltiplicandole o dividendole per una costante
-	- ![[Pasted image 20240523110216.png|350]]
 - **sotto-lineare** 
 	- $O(n^c)$ con $c<1$, ossia la complessità per cicli annidati in base al numero di volte in cui vengono eseguite le istruzioni
+	- **logaritmica**
+		- $O(\log n)$, ossia la complessità di un ciclo quando le sue variabili sono incrementate o decrementate moltiplicandole o dividendole per una costante
+		- ![[Pasted image 20240523110216.png|350]]
 - **lineare** 
 	- $O(n)$, ossia la complessità di un ciclo quando le sue variabili sono incrementate o decrementate di una quantità costante
 	- ![[Pasted image 20240523110018.png|350]]
@@ -84,6 +84,7 @@ Attraverso la notazione $O()$ gli algoritmi vengono suddivisi in classi di equiv
 
 In *ordine*:
 - $O(1) < O(log n) < O(n) < O(n log n) <O(n^c) < O(c^n)$
+- ![[Pasted image 20240905163514.png|350]]
 
 **In definitiva**, se un algoritmo $A$ prende al massimo tempo $t(n)$, allora $O(t(n))$ è un limite superiore.
 Concettualmente:
@@ -125,11 +126,16 @@ bool linearSearch(int array[], int n, int key) {
 }
 ```
 
+*Complessità*:
+- caso migliore: $O(1)$
+- caso medio: $O(n)$
+- caso peggiore: $O(n)$
+
 Un tipo di ricerca più efficiente è la *ricerca dicotomica* o **ricerca binaria**
 spiegata in seguito:
 
 ##### Ricerca Dicotomica o Binaria
-Si effettua una ricerca su un array già ordinato. Questa è un informazione importante dato che permette di:
+Si effettua una ricerca su un **array già ordinato**. Questa è un informazione importante dato che permette di:
 - *suddividere l'array a metà* e controllare se la key è $>,=,<$ dell'elemento presente nel mezzo
 - *ripetere le suddivisioni* fino a che non si avranno due elementi per il quale scegliere quello richiesto
 
@@ -178,6 +184,11 @@ void binary_Search(int *array, int key) {
 }
 ```
 
+*Complessità*:
+- caso migliore: $O(1)$
+- caso medio: $O(\log n)$
+- caso peggiore: $O(\log n)$
+
 #### Algoritmi Iterativi o di Ordinamento
 L'algoritmo di ordinamento classico che si utilizza computa eseguendo un confronto tra due elementi in cui: se l'elemento `j`, successivo all'elemento `i`, è più piccolo allora si effettua lo scambio tra i due
 
@@ -209,7 +220,10 @@ Finiti i confronti si effettua uno swap tra l'elemento fissato dal ciclo e l'ele
 
 Si ripete il procedimento per la lunghezza dell'array
 
-*Complessità*: $O(n^2)$
+*Complessità:
+- caso migliore: $O(n)$
+- caso medio: $O(n^2)$
+- caso peggiore: $O(n^2)$
 *Vantaggio*: meno chiamate alla funzione swap e maggiore vantaggio in termini di efficienza
 
 **Algoritmo**:
@@ -260,8 +274,10 @@ void insertion_sort(int array[]) {
 }
 ```
 
-*Complessità*: $O(n^2)$
-*Vantaggio*: è fico
+*Complessità*:
+- caso migliore: $O(n)$
+- caso medio: $O(n^2)$
+- caso peggiore: $O(n^2)$
 
 #### Algoritmi Ricorsivi di Ordinamento
 Rispetto agli *algoritmi di ordinamento iterativi* sono più efficienti, in termini di complessità. Si basano sulla ricorsione e sulla logica *dividi et impera*
@@ -466,7 +482,7 @@ int main() {
 ## OOP (Object Oriented Programming)
 I principi di base di questo paradigma di programmazione sono:
 - **astrazione**
-- **incapsulamento** (o **information hiding**)
+- **information hiding** e **incapsulamento**
 - **ereditarietà**
 - **polimorfismo**
 
@@ -479,7 +495,12 @@ Terminologia:
 ### 2. Information Hiding
 >E' la capacità di una classe di incapsulare sia le caratteristiche (attributi) che i comportamenti (metodi) degli oggetti che rappresenta
 
+**N.B.**: nasconde all'esterno i dettagli implementativi dei metodi di un oggetto
+
 Limita di molto gli errori rispetto alla programmazione strutturata
+
+#### 2.1 Incapsulamento
+>E' la proprietà degli oggetti di incorporare al loro interno sia gli attributi (caratteristiche) che i metodi (comportamenti)
 
 ### Classe
 >Una classe è un insieme di oggetti che condividono struttura e comportamento
@@ -534,7 +555,7 @@ int main() {
 }
 ```
 
->L'**oggetto** è un'*istanza* della classe che viene allocata in memoria
+>L'**oggetto** è un'entità che ha un proprio stato e che può eseguire certe operazioni. Nello specifico, è un'*istanza* della classe che viene allocata in memoria
 
 **N.B.**: i metodi **non** occupano spazio nell'istanza di un oggetto mentre gli attributi sì
 
@@ -548,6 +569,14 @@ Caratteristiche:
 
 **N.B.**: E' bene che un oggetto si possa auto-inizializzare a seguito della sua creazione, senza dovere effettuare una successiva chiamata ad una sua qualche funzione membro
 **N.B.**$_{2}$: C++ crea automaticamente un *costruttore di default* quando non vi sono altri costruttori, tuttavia esso non inizializza i membri della classe a valori predefiniti
+
+Ne esistono di tre tipi:
+1. *Default*
+	- serve per inizializzare gli attributi con dei valori di default
+2. *Parametrizzato*
+	- serve per inizializzare gli attributi con dei valori presi dai parametri
+3. *Copia*
+	- serve per inizializzare glli attributi con dei valori presi da un oggetto della stessa classe
 
 #### Distruttore
 >E' un metodo speciale che viene chiamato automaticamente quando si distrugge un oggetto; serve per liberare la memoria assegnata dal costruttore
@@ -660,14 +689,20 @@ class MyClass {
 ```
 
 ### 3. Ereditarietà
->Una classe derivata **eredita** attributi e metodi dalla classe base già esistente
+>E' lo strumento che permette di costruire nuove classi utilizzando quelle già sviluppate: una classe derivata **eredita** attributi e metodi dalla classe base già esistente
 
 E' un ulteriore livello di astrazione che permette di avere un livello più alto rispetto a un interfaccia comune (*classe base*), grazie al al quale tutte le proprietà di questa classe vengono estese alle *classi derivate* (in quest'ultime si possono aggiungere nuove specifiche e funzionalità)
 
 ### 4. Polimorfismo
->Il **polimorfismo** permette di avere funzioni che hanno la stessa firma ma assumono diversi comportamenti a seconda del chiamante
+>Il **polimorfismo** indica la possibilità per i metodi di assumere forme, cioè implementazioni, diverse all'interno della gerarchia delle classi. 
 
 E' la caratteristica grazie al quale oggetti di classi diverse rispondono in maniera diversa a uno stesso metodo
+
+Due concetti fondamentali del polimorfismo nella OOP sono:
+- l'*overloading* degli operatori
+	- più funzioni con lo stesso nome ma con firme diverse (diverso numero o tipo di parametri)
+- l'*overriding* delle funzioni
+	- quando una classe derivata fornisce una specifica implementazione di un metodo che è già definito nella sua classe base: la versione del metodo nella classe derivata sostituisce quella della classe base quando viene chiamato su un oggetto della classe derivata
 
 E' fondamentale associare il concetto di **binding**
 
@@ -675,7 +710,7 @@ E' fondamentale associare il concetto di **binding**
 >Si riferisce all'associazione tra una funzione chiamata e la funzione che viene effettivamente eseguita
 
 Può essere:
-- **statico**, se l'associazione avviene a *tempo di compilazione*
+- **statico** (default), se l'associazione avviene a *tempo di compilazione*
 - **dinamico**, se l'associazione avviene a *tempo di esecuzione*
 
 ##### Binding Statico
@@ -762,7 +797,7 @@ Ciò non vale nel caso in cui l'ereditarietà è di tipo *protected* o *private*
 - essa può essere definita in una classe derivata
 - la funzione potrà essere invocata tramite un puntatore
 
->Permettono a una classe base di definire funzioni che possono essere sovrascritte nelle classi derivate, con il comportamento corretto determinato a tempo di esecuzione
+>Permettono a una classe base di definire funzioni che possono essere **sovrascritte** (**overriding**) nelle classi derivate, con il comportamento corretto determinato a tempo di esecuzione
 
 **Esempio**:
 ```c++
