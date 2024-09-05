@@ -1523,32 +1523,36 @@ using namespace std;
 // class Node goes here...
 
 // class List goes here...
+// Methods to use:
+	// push_head()
+	// extract_head()
 
 template <typename T>
+
 class Stack {
-    private:
-        List<T> list; // Usa la lista per implementare la pila
+    private:
+        List<T> list; // Usa la lista per implementare la pila
 
-    public:
-        // Aggiunge un elemento in cima alla pila
-        void push(T value) {
-            list.push_head(value);
-        }
+    public:
+        // Aggiunge un elemento in cima alla pila
+        void push(T value) {
+            list.push(value); // list.push_head()
+        }
+        
+        // Rimuove e restituisce l'elemento in cima alla pila
+        T pop() {
+            return list.pop(); // list.extract_head()
+        }
 
-        // Rimuove e restituisce l'elemento in cima alla pila
-        T pop() {
-            return list.extract_head();
-        }
+        // Controlla se la pila è vuota
+        bool is_empty() const {
+            return list.is_Empty();
+        }
 
-        // Controlla se la pila è vuota
-        bool is_empty() const {
-            return list.is_Empty();
-        }
-
-        // Stampa gli elementi nella pila
-        void print_stack() const {
-            list.print_list();
-        }
+        // Stampa gli elementi nella pila
+        void print_stack() const {
+            list.print_list();
+        }
 };
 
 int main() {
@@ -1589,32 +1593,35 @@ using namespace std;
 
 // class Node goes here...
 // class List goes here...
+// Methods to use:
+	// push_tail()
+	// extract_head()
 
 template <typename T>
 class Queue {
-    private:
-        List<T> list; // Usa la lista per implementare la coda
+    private:
+        List<T> list; // Usa la lista per implementare la coda
 
-    public:
-        // Aggiunge un elemento in fondo alla coda
-        void enqueue(T value) {
-            list.push_tail(value);
-        }
+    public:
+        // Aggiunge un elemento in fondo alla coda
+        void enqueue(T value) {
+            list.enqueue(value); // list.push_tail()
+        }
 
-        // Rimuove e restituisce l'elemento all'inizio della coda
-        T dequeue() {
-            return list.extract_head();
-        }
+        // Rimuove e restituisce l'elemento all'inizio della coda
+        T dequeue() {
+            return list.dequeue(); // list.extract_head()
+        }
 
-        // Controlla se la coda è vuota
-        bool is_empty() const {
-            return list.is_Empty();
-        }
-
-        // Stampa gli elementi nella coda
-        void print_queue() const {
-            list.print_list();
-        }
+        // Controlla se la coda è vuota
+        bool is_empty() const {
+            return list.is_Empty();
+        }
+  
+        // Stampa gli elementi nella coda
+        void print_queue() const {
+            list.display();
+        }
 };
 
 int main() {
