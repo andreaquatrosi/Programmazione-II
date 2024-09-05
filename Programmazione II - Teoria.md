@@ -1524,6 +1524,7 @@ using namespace std;
 
 // class List goes here...
 // Methods to use:
+	// ~List() { if(!is_empty) pop(); }
 	// push_head()
 	// extract_head()
 
@@ -1594,6 +1595,7 @@ using namespace std;
 // class Node goes here...
 // class List goes here...
 // Methods to use:
+	// ~List() { if(!is_empty) dequeue(); }
 	// push_tail()
 	// extract_head()
 
