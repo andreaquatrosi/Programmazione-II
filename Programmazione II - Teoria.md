@@ -493,9 +493,7 @@ Terminologia:
 - **Astrarre** significa semplificare delle entità complesse in *oggetti caratterizzati dalle caratteristiche e dalle funzionalità essenziali* per gli scopi preposti
 
 ### 2. Information Hiding
->E' la capacità di una classe di incapsulare sia le caratteristiche (attributi) che i comportamenti (metodi) degli oggetti che rappresenta
-
-**N.B.**: nasconde all'esterno i dettagli implementativi dei metodi di un oggetto
+> E' la capacità di una classe di nascondere all'esterno i dettagli implementativi dei metodi di un oggetto
 
 Limita di molto gli errori rispetto alla programmazione strutturata
 
