@@ -1970,3 +1970,61 @@ Prevede i seguenti passi:
 **Esempio**:
 - ![[Pasted image 20240901123105.png|350]]
 - $1-2-3-4-5-6-7-10-12-14-16-18$
+
+### Grafi
+>Si dice **grafo** un insieme di nodi legati "a due a due" da archi direzionati o non
+
+I grafi sono strutture dati di fondamentale importanza in informatica
+
+**Terminologia**:
+- $G=(V,E)$ dove:
+	- $G$ è il grafo
+	- $V$ è l'insieme dei *vertici* 
+	- $E$ è l'insieme degli *archi* $(u,v)$
+- **Cammino** (di lunghezza $k$) da $u$ a $v$ è la sequenza $v_{0},\dots,v_{k} :u=v_{o} \text{ e }v=v_{k}$, contentente anche gli archi $(v_{0},v_{1}),\dots,(v_{k-1},v_{k})$
+	- **Cammino Semplice** è un cammino in cui tutti i vertici in esso contenuti sono distinti
+- **Sottocammino** è la sequenza di vertici $v_{i},\dots,v_{j}$ di un cammino $v_{0},\dots v_{k}$ per cui $0\leq i\leq j\leq k$
+- **Ciclo** è un cammino $v_{0},\dots,v_{k}$ per cui $v_{0} = v_{k}$
+	- **Ciclo Semplice** è un ciclo in cui tutti i suoi nodi sono distinti
+	- **Aciclico** è un grafo che non contiene cicli
+
+#### Grafo Non Direzionato
+>Si dice **grafo non direzionato**, un grafo in cui ciascun arco collega i vertici da entrambe le direzioni
+
+**Esempio**:
+- ![[Pasted image 20240907131744.png|350]]
+
+**Caratteristiche**:
+- $E$ consiste di *coppie non ordinate* di vertici
+- *Self-loops* non sono ammessi
+- $(u,v)$, $u$ e $v$ sono sia entranti che uscenti (non hanno la freccia)
+- l'adiacenza è *simmetrica*
+
+##### Grado
+>E' dato dal numero di archi entranti
+
+##### Grafo Non Direzionato Connesso
+>Un grafo non direzionato si dice **connesso** se ogni coppia di vertici è unita da un cammino
+
+**N.B.**: un grafo direzionato è connesso se ha $1$ componente connessa
+
+##### Grafo Non Direzionato Completo
+>Un grafo non direzionato si dice **completo** se ogni coppia di vertici è adiacente
+
+#### Grafo Direzionato
+>Si dice **grafo direzionato** un grafo in cui ciascun arco che collega i vertici da una o più direzioni
+
+**Esempio**:
+- ![[Pasted image 20240907132325.png|350]]
+
+**Caratteristiche**:
+- $E$ consiste di *coppie ordinate* di vertici
+- *Self-loops* sono ammessi
+- $(u,v)$, $u$ e $v$ sono o entranti o uscenti (hanno la freccia)
+- Se $(u,v)\in E$, $v$ è adiacente a $u$
+
+##### Grado
+> E' dato dal **numero di archi entranti** $+$ il **numero di archi uscenti**
+
+##### Grafo Direzionato Fortemente Connesso
+>Un grafo direzionato si dice **fortemente connesso** se per ogni coppia di vertici $(u,v)$ esiste un cammino che unisci $u$ a $v$ e $v$ a $u$
