@@ -1971,16 +1971,15 @@ Prevede i seguenti passi:
 - ![[Pasted image 20240901123105.png|350]]
 - $1-2-3-4-5-6-7-10-12-14-16-18$
 
-### Grafi
->Si dice **grafo** un insieme di nodi legati "a due a due" da archi direzionati o non
-
-I grafi sono strutture dati di fondamentale importanza in informatica
+## Grafi
+>Si dice **grafo** un insieme di vertici legati "a due a due" da archi direzionati o non
 
 **Terminologia**:
 - $G=(V,E)$ dove:
 	- $G$ è il grafo
 	- $V$ è l'insieme dei *vertici* 
 	- $E$ è l'insieme degli *archi* $(u,v)$
+	- **Sottografo** $G^\prime=(V^\prime,E^\prime)$ di $G=(V,E)$ 
 - **Cammino** (di lunghezza $k$) da $u$ a $v$ è la sequenza $v_{0},\dots,v_{k} :u=v_{o} \text{ e }v=v_{k}$, contentente anche gli archi $(v_{0},v_{1}),\dots,(v_{k-1},v_{k})$
 	- **Cammino Semplice** è un cammino in cui tutti i vertici in esso contenuti sono distinti
 - **Sottocammino** è la sequenza di vertici $v_{i},\dots,v_{j}$ di un cammino $v_{0},\dots v_{k}$ per cui $0\leq i\leq j\leq k$
@@ -1988,7 +1987,7 @@ I grafi sono strutture dati di fondamentale importanza in informatica
 	- **Ciclo Semplice** è un ciclo in cui tutti i suoi nodi sono distinti
 	- **Aciclico** è un grafo che non contiene cicli
 
-#### Grafo Non Direzionato
+### Grafo Non Direzionato
 >Si dice **grafo non direzionato**, un grafo in cui ciascun arco collega i vertici da entrambe le direzioni
 
 **Esempio**:
@@ -2000,19 +1999,19 @@ I grafi sono strutture dati di fondamentale importanza in informatica
 - $(u,v)$, $u$ e $v$ sono sia entranti che uscenti (non hanno la freccia)
 - l'adiacenza è *simmetrica*
 
-##### Grado
+#### Grado
 >E' dato dal numero di archi entranti
 
-##### Grafo Non Direzionato Connesso
+#### Grafo Non Direzionato Connesso
 >Un grafo non direzionato si dice **connesso** se ogni coppia di vertici è unita da un cammino
 
 **N.B.**: un grafo direzionato è connesso se ha $1$ componente connessa
 
-##### Grafo Non Direzionato Completo
+#### Grafo Non Direzionato Completo
 >Un grafo non direzionato si dice **completo** se ogni coppia di vertici è adiacente
 
-#### Grafo Direzionato
->Si dice **grafo direzionato** un grafo in cui ciascun arco che collega i vertici da una o più direzioni
+### Grafo Direzionato
+>Si dice **grafo direzionato** un grafo in cui ciascun arco collega i vertici da una o più direzioni
 
 **Esempio**:
 - ![[Pasted image 20240907132325.png|350]]
@@ -2023,8 +2022,124 @@ I grafi sono strutture dati di fondamentale importanza in informatica
 - $(u,v)$, $u$ e $v$ sono o entranti o uscenti (hanno la freccia)
 - Se $(u,v)\in E$, $v$ è adiacente a $u$
 
-##### Grado
+#### Grado
 > E' dato dal **numero di archi entranti** $+$ il **numero di archi uscenti**
 
-##### Grafo Direzionato Fortemente Connesso
->Un grafo direzionato si dice **fortemente connesso** se per ogni coppia di vertici $(u,v)$ esiste un cammino che unisci $u$ a $v$ e $v$ a $u$
+#### Grafo Direzionato Fortemente Connesso
+>Un grafo direzionato si dice **fortemente connesso** se per ogni coppia di vertici $(u,v)$ esiste un cammino che unisce $u$ a $v$ e $v$ a $u$
+
+### Rappresentare un grafo
+Esistono due modi principali per rappresentare un grafo:
+1. **Liste di adiacenza**, utilizzate per rappresentare grafi con pochi archi
+	- $O(\text{max}(|V|,|E|))=O(|V|+|E|)$ spazio
+	- ![[Pasted image 20240907152738.png|250]]
+1. **Matrici di adiacenza**, utilizzate per rappresentare grafi con molti archi
+	- $O(|V|^2)$ spazio
+	- ![[Pasted image 20240907152816.png|250]]
+
+**N.B.**: $|V|$ la cardinalità di $V$, ossia un $n\in\mathbb N$ definito come il *numero di elementi che costituiscono l'insieme*
+
+#### Liste di adiacenza
+Per i **grafi non direzionati**:
+- si definisce un array di $|V|$ liste, una per ogni vertice
+- si definisce `adj[u]` contenente puntatori a tutti i vertici $v$ per i quali $(u,v)\in E$
+- la somma delle lunghezze di tutte le liste è $2|E|$
+
+**Esempio**:
+- ![[Pasted image 20240907152646.png|350]]
+
+Per i **grafi direzionati**:
+- si definisce un array di $|V|$ liste, una per ogni vertice
+- si definisce `adj[u]` contenente puntatori a tutti i vertici $v$ per i quali $(u,v)\in E$
+- la somma delle lunghezze di tutte le liste è $|E|$
+
+**Esempio**:
+- ![[Pasted image 20240907152912.png|350]]
+
+#### Matrici di adiacenza
+Si ha che:
+- $a=[a_{ij}]$
+- $a_{ij}=1$ sse $(i,j)\in E$ ($0$ altrimenti)
+
+**Esempio**:
+- ![[Pasted image 20240907153105.png|350]]
+
+### Ricerca
+#### Ricerca In Ampiezza (Breadth - First - Search)
+>L'algoritmo di **ricerca in ampiezza** (o **BFS**, **B**readth-**F**irst-**S**earch) è un metodo per attraversare o cercare i nodi di un grafo che si basa sull'esplorare tutti i nodi adiacenti al nodo corrente prima di muoversi verso i nodi successivi
+
+**N.B.**: viene anche utilizzato per trovare la distanza minima tra due nodi in un grafo non pesato o per trovare i percorsi più brevi
+
+**Esempio**: dato un vertice $s$, si esplora il grafo per scoprire ogni vertice $v$ raggiungibile da $s$
+
+*Complessità*: $O(n+m)$ dove $n =$ numero di nodi e $m =$ numero di archi 
+
+Per implementare questo tipo di ricerca si procede a step:
+
+###### 1. Inizializzazione
+- Si sceglie un nodo di partenza e lo si inserisce in una coda di nodi da visitare, tenendo traccia dei nodi già visitati
+
+###### 2. Iterazione Principale
+- Finché la coda non è vuota, si estrae un nodo dalla coda: il nodo estratto rappresenta il nodo corrente da esamina
+- Si visitano i nodi adiacenti a questo nodo corrente che non sono stati visitati e li si aggiungono alla coda
+
+###### 3. Segnare i Nodi Visitati
+- Ogni volta che si visita un nodo, lo si marca come visitato
+- Questo può essere fatto mantenendo una lista di nodi visitati o segnando i nodi stessi
+
+###### 4. Ripetere per l'Intero Grafo
+Si continua il passo **2.** finché ci sono nodi nella coda o finché non sono stati visitati tutti i nodi accessibili dal nodo di partenza
+
+###### 5. Risultato
+Si ottiene un **albero di visita** (o **albero di copertura in ampiezza**) che copre tutti i nodi raggiungibili dal nodo di partenza
+
+##### Breadth-First-Tree
+>La procedura $BFS(G,s)$ serve a costruire un albero rappresentante i predecessori di ciascun nodo
+
+**Caratteristiche** $G_{p}=(V_{p},E_{p})$:
+- $V_{p}=\{ v\in V :p[v]\neq \\text{NULL}\}$
+- $E_{p}=\{ (p[v],v)\in E:v\in V_{p},v\neq s \}$
+
+$G_{p}$ è un albero in cui:
+- c'è un unico cammino da $s$ a $v\in V_{p}$ che è anche il cammino più breve
+- gli archi in $E_p$ sono chiamati *tree-edges*
+
+#### Ricerca in Profondità (Depth - First - Search)
+>L'algoritmo di **ricerca in profondità** (o **DFS**, **D**epth-**F**irst-**S**earch) è un metodo per attraversa o cercare i nodi di un grafo che si basa sull'esplorare più in profondità possibile lungo un ramo del grafo prima di tornare indetro e esplorare gli altri rami
+
+Gli archi sono esplorati a partire dal nodo $v$ che:
+- è stato scoperto più di recente
+- abbia ancora archi (uscenti) non esplorati
+
+Quando gli archi di $v$ terminano, si fa *backtracking*:
+- si esplorano eventuali altri archi (uscenti) dal nodo precedente a $v$
+
+Si ripete il processo fin quando vi sono nodi da esplorare
+
+*Complessità*: $\Theta(V+E)$
+
+Per implementare questo tipo di ricerca si procede a step:
+
+###### 1. Inizializzazione
+- Si sceglie un nodo di partenza e lo si marca come visitato, tenendo traccia dei nodi già visitati
+
+###### 2. Iterazione Principale
+- Si visitano un nodo adiacente non visitato dal nodo corrente
+- Si continua finché non si raggiunge un nodo senza nodi adiacenti non visitati
+- Si fa backtracking fino a trovare un nodo con nodi adiacenti non visitati
+###### 3. Segnare i Nodi Visitati
+- Ogni volta che si visita un nodo, lo si marca come visitato
+- Questo può essere fatto mantenendo una lista di nodi visitati o segnando i nodi stessi
+
+###### 4. Ripetere per l'Intero Grafo
+Si continua il passo **2.** finché non sono stati visitati tutti i nodi
+
+###### 5. Risultato
+Si ottiene un **albero di visita** (o **albero di copertura in profondità) che copre tutti i nodi raggiungibili dal nodo di partenza
+
+##### Depth-First-Forest
+>La procedura $BFS(G,s)$ serve a costruire un albero rappresentante i predecessori di ciascun nodo
+
+$G_{p}$ è una foresta in cui:
+- $V_{p}=V$
+- $E_{p}=\{ (p[v],v)\in E:v\in V,p[v]\neq \text{NULL} \}$
