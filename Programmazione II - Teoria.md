@@ -507,6 +507,8 @@ Essa contiene:
 - **attributi**, specifica dei dati che descrivono ogni oggetto che ne fa parte
 - **metodi**, descrizione delle azioni che l'oggetto stesso è capace di eseguire
 
+Gli attributi (o membri dato) non possono essere inizializzati all'atto della loro definizione ma si devono inizializzare ogni volta che si crea un'*istanza specifica* della classe mediante il **Costruttore** della classe
+
 **Codice**:
 ```c++
 #include <iostream>
@@ -560,7 +562,7 @@ int main() {
 #### Costruttore
 >E' il metodo responsabile dell'istanziazione di un oggetto
 
-Caratteristiche:
+**Caratteristiche**:
 - ha lo stesso nome della classe
 - non ha tipo di ritorno
 - inizializza i valori degli attributi
@@ -579,12 +581,14 @@ Ne esistono di tre tipi:
 #### Distruttore
 >E' un metodo speciale che viene chiamato automaticamente quando si distrugge un oggetto; serve per liberare la memoria assegnata dal costruttore
 
-Caratteristiche:
+**Caratteristiche**:
 - stesso nome della classe preceduta dal simbolo ~
 - non ha tipo di ritorno
 - non accetta parametri
 - non può essercene più di uno
 - se non si dichiara, C++ ne crea uno in automatico
+
+**N.B.**: il metodo Distruttore viene invocato alla chiusura del main automaticamente
 
 ##### Header File
 >Separare in files diversi il codice "cliente" della classe dal codice della classe
@@ -593,6 +597,17 @@ Caratteristiche:
 >Separare il codice sorgente di una classe in due files con lo stesso nome della classe
 - uno con la definizione della classe (solo prototipi dei metodi) ed estensione **.h**
 - un altro con le implementazioni dei metodi della classe ed estensione **.cpp**
+
+#### Specificatori di Accesso
+>Gli **specificatori di accesso** permettono di controllare la visibilità all'esterno di attributi e metodi
+
+Si fa utilizzo delle parole chiavi:
+- `private:`
+	- possono essere acceduti solo dall'interno della classe
+- `protected:`
+	- possono essere acceduti anche da metodi di classi derivate
+- `public:`
+	- possono essere acceduti dall'esterno della classe
 
 #### Static, Const e Friend
 ##### 1. Static
