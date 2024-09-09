@@ -283,9 +283,9 @@ void insertion_sort(int array[]) {
 Rispetto agli *algoritmi di ordinamento iterativi* sono più efficienti, in termini di complessità. Si basano sulla ricorsione e sulla logica *dividi et impera*
 
 I passi del paradigma **dividi et impera** sono tre:
-1. *suddividere il problema in sottoproblemi*
-2. *risolvere i sottoproblemi*
-3. *combinare le soluzioni*
+1. **Dividere**: *suddividere il problema in sottoproblemi*
+2. **Conquistare**: *risolvere i sottoproblemi*
+3. **Combinare**: *combinare le soluzioni dei sottoproblemi*
 
 ##### Merge Sort
 La logica su cui si basa questo algoritmo risiede principalmente nella *combinazione*
@@ -407,7 +407,7 @@ Si sviluppa nel seguente modo:
 **N.B.**: lo scopo del pivot è di posizionarlo nella sua posizione ordinata finale, mettendo gli elementi minori a sinistra e maggiori a destra
 
 *Complessità*: nel **caso medio** $O(n\log n)$ mentre nel **caso peggiore** $O(n^2)$
-*Vantaggio*: l'algoritmo è più efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
+*Vantaggio*: l'algoritmo è meno efficiente con $n$ molto grandi dato che prendere un elemento che sia il minimo o il massimo è molto meno probabile
 
 **Algoritmo**:
 ```c++
@@ -717,6 +717,9 @@ Due concetti fondamentali del polimorfismo nella OOP sono:
 - l'*overriding* delle funzioni
 	- quando una classe derivata fornisce una specifica implementazione di un metodo che è già definito nella sua classe base: la versione del metodo nella classe derivata sostituisce quella della classe base quando viene chiamato su un oggetto della classe derivata
 
+
+**N.B.**: ogni oggetto risponde alle chiamate ai metodi come specificato dal suo vero tipo
+
 E' fondamentale associare il concetto di **binding**
 
 #### Binding
@@ -766,7 +769,9 @@ int main() {
 ##### Binding Dinamico
 Questo tipo di binding è utilizzato per le funzioni virtuali. Le funzioni vengono risolte in base al tipo dell'oggetto al momento dell'esecuzione, non al momento della compilazione
 
-Per abilitarlo si utilizzano le *funzioni virtual*
+Per abilitarlo si antepone la clausola `virtual` alla dichiarazione di una funzione per indicare al compilatore che essa può essere definita in una classe derivata
+
+*Vantaggio*: offre un alto grado di flessibilità e praticità nella gestione delle gerarchie di classi
 
 **Esempio**:
 ```c++
@@ -854,6 +859,40 @@ int main() {
     renderShape(square); // Chiama Square::draw()
 
     return 0;
+}
+```
+
+#### Classi Astratte
+>Una **classe astratta** è una classe che contiene almeno un metodo puramente virtuale: come conseguenza, non si possono istanziare oggetti di una classe astratta
+
+**Esempio**:
+```c++
+// Definizione di una classe puramente virtuale
+class MyClass {
+	private:
+		int value;
+		string a_string;
+
+	public:
+		virtual void myAbstractFunction() = 0;
+};
+
+class MyDerivedClass : public MyClass {
+	private:
+		// Ulteriori attributi
+
+	public:
+		void myAbstractFunction() {
+			// Implementazione
+		}
+};
+
+int main() {
+
+	MyClass myObj; // NO
+	MyDerivedClass myDerivedObj; // SI
+
+	return 0;
 }
 ```
 
@@ -1004,10 +1043,14 @@ int main() {
 #### Template di classi e funzioni
 >Così come una classe è un modello per istanziare oggetti a tempo di esecuzione, un **template** è un modello per istanziare classi o funzioni a tempo di compilazione
 
-Il template implementa il concetto di *tipo parametrizzato*
+Permetto di implementare strutture (classi) e algoritmi (funzioni) indipendentemente dal tipo di oggetti su cui operano 
+
+Il template implementa il concetto di *tipo parametrizzato*: il tipo viene specificato come se fosse un parametro
 
 ##### Template di Funzioni
->Sono funzioni inn grado di operare su tipi generici
+>Sono funzioni in grado di operare su tipi generici
+
+Il compilatore genererà più copie della stessa funzione per eseguire le chiamate con tipi di dato differenti
 
 **Esempio**:
 ```c++
