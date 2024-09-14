@@ -312,85 +312,62 @@ Quest'ultima è realizzata tramite una funzione **merge**:
 
 **Algoritmo**:
 ```c++
-#include <iostream>
+// Merge function to combine two sorted halves
+template <typename T>
+void merge(T arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-using namespace std;
+    // Create temporary arrays
+    T *L = new T[n1];
+    T *R = new T[n2];
 
-void merge(int* A, size_t p, size_t q, size_t r) {
+    // Copy data to temporary arrays
+    for (int i = 0; i < n1; ++i)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; ++j)
+        R[j] = arr[mid + 1 + j];
 
-    size_t n1 = q-p+1; // Dimensione sotto-array L
-    size_t n2 = r-q;   // Dimensione sotto-array R
+    // Merge the temporary arrays back into arr
+    int i = 0; // Initial index of first subarray
+    int j = 0; // Initial index of second subarray
+    int k = left; // Initial index of merged subarray
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k++] = L[i++];
+        } else {
+            arr[k++] = R[j++];
+        }
+    }
 
-    int* L = new int [n1+1];
-    int* R = new int [n2+1];
+    // Copy the remaining elements of L[], if any
+    while (i < n1) {
+        arr[k++] = L[i++];
+    }
 
-    size_t i = 0, j = 0;
-    
-    // Inizializzo L con gli elementi di sinistra di A
-    for(i = 0; i < n1; i++) {
-        L[i] = A[p+i];
-    }
+    // Copy the remaining elements of R[], if any
+    while (j < n2) {
+        arr[k++] = R[j++];
+    }
 
-    // Inizializzo R con gli elementi di destra di A
-    for(j = 0; j < n2; j++) {
-        R[j] = A[q+1+j];
-    }
-
-    i = j = 0;
-
-    L[n1] = R[n2] = INT_MAX;    // Elementi sentinella  
-
-    for(size_t k = p; k <= r; k++) {
-        if(L[i] < R[j]) {
-            A[k] = L[i];
-            i++;
-        } else {
-            A[k] = R[j];
-            j++;
-        }
-    }
-
-    delete [] L;
-    L = nullptr;
-
-    delete [] R;
-    R = nullptr;
+    // Free dynamically allocated memory
+    delete[] L;
+    delete[] R;
 }
 
-void mergeSort(int* A, size_t p, size_t r) {
+// Merge sort function
+template <typename T>
+void mergeSort(T arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
 
-	// p = left
-	// r = right
-	// q = middle
-    if(p < r) {
-        size_t q = (p+r)/2; // suddivido l'array in due parti
-        
-        mergeSort(A, p, q); // applico il merge sort fino a quando i sotto-array hanno dimensione = 1
-        mergeSort(A, q+1, r);
-        merge(A, p, q, r);
-    }
-}
+        // Recursively sort first and second halves
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
 
-int main() {
-
-    constexpr size_t N = 11;
-
-    int array[N];
-
-    cout << "Fill array:\n";
-    for(size_t i = 0; i < N; i++)
-        cin >> array[i];
-
-    cout << "Unsorted Array:\n";
-    for(size_t i = 0; i < N; i++)
-        cout << array[i] << " ";
-
-    cout << "\nSorted Array:\n";
-    mergeSort(array, N-N, N);
-    for(size_t i = 0; i < N; i++)
-        cout << array[i] << " ";
-
-    return 0;
+        // Merge the sorted halves
+        merge(arr, left, mid, right);
+    }
 }
 ```
 
@@ -411,71 +388,44 @@ Si sviluppa nel seguente modo:
 
 **Algoritmo**:
 ```c++
-#include <iostream>
-
-using namespace std;
-  
-void swap(int& a, int& b) {
-
-    int t = a;
-    a = b;
-    b = t;
+// Function to swap two elements
+template <typename T>
+void swap(T &a, T &b) {
+    T temp = a;
+    a = b;
+    b = temp;
 }
 
-int partition(int* A, size_t p, size_t r) {
+// Partition function for quick sort
+template <typename T>
+int partition(T arr[], int low, int high) {
+    T pivot = arr[high]; // Choose the rightmost element as pivot
+    int i = low - 1; // Index of smaller element
 
-    size_t i = p-1;
-    size_t j = p;
+    for (int j = low; j < high; ++j) {
+        // If current element is smaller than or equal to pivot
+        if (arr[j] <= pivot) {
+            ++i; // Increment index of smaller element
+            swap(arr[i], arr[j]);
+        }
+    }
 
-    int& pivot = A[r];
-
-    while(j < r) {
-        if(A[j] <= pivot) {
-            i++;
-            swap(A[i], A[j]);
-        }
-        
-        j++;
-    }
-
-    swap(pivot, A[i+1]);
-
-    return i+1;
+    // Swap the pivot element with the element at (i + 1)
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
 }
 
-void quickSort(int* A, size_t p, size_t r) {
+// Quick sort function
+template <typename T>
+void quickSort(T arr[], int low, int high) {
+    if (low < high) {
+        // Partition the array
+        int pi = partition(arr, low, high);
 
-	// p = left
-	// r = right
-	// q = middle
-    if(p < r) {
-        int q = partition(A, p, r);
-        
-        quickSort(A, p, q-1);
-        quickSort(A, q+1, r);
-    }
-}
-
-int main() {
-
-    constexpr size_t N = 8;
-
-    int array[N];
-  
-    cout << "Fill array:\n";
-    for(size_t i = 0; i < N; i++)
-        cin >> array[i];
-
-    cout << "Unsorted Array:\n";
-    for(size_t i = 0; i < N; i++)
-        cout << array[i] << " ";
-
-    cout << "\nSorted Array:\n";
-    quickSort(array, N-N, N);
-    for(size_t i = 0; i < N; i++)
-        cout << array[i] << " ";
-
-    return 0;
+        // Recursively sort elements before and after partition
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
 }
 ```
 
@@ -1999,7 +1949,7 @@ Queste tre visite hanno in comune il fatto di essere procedure ricorsive, che si
 
 *Complessità*: $\Theta(n)$
 
-##### Visita PreoOrder
+##### Visita PreOrder
 Prevede i seguenti passi:
 - visitare la *radice*
 - visitare il *sottoalbero sinistro*
@@ -2138,7 +2088,7 @@ Per implementare questo tipo di ricerca si procede a step:
 - Si sceglie un nodo di partenza e lo si inserisce in una coda di nodi da visitare, tenendo traccia dei nodi già visitati
 
 ###### 2. Iterazione Principale
-- Finché la coda non è vuota, si estrae un nodo dalla coda: il nodo estratto rappresenta il nodo corrente da esamina
+- Finché la coda non è vuota, si estrae un nodo dalla coda: il nodo estratto rappresenta il nodo corrente da esaminare
 - Si visitano i nodi adiacenti a questo nodo corrente che non sono stati visitati e li si aggiungono alla coda
 
 ###### 3. Segnare i Nodi Visitati
@@ -2201,3 +2151,21 @@ Si ottiene un **albero di visita** (o **albero di copertura in profondità) che 
 $G_{p}$ è una foresta in cui:
 - $V_{p}=V$
 - $E_{p}=\{ (p[v],v)\in E:v\in V,p[v]\neq \text{NULL} \}$
+
+## Costrutti del C++
+### Puntatori e Riferimenti
+#### Riferimenti
+> Il **riferimento** ad una variabile è un ulteriore nome per essa, un "alias"
+
+Essa dev'essere inizializzata contestualmente alla sua definizione con il nome di una variabile già definita dello stesso tipo
+
+#### Puntatori
+>Il **puntatore** è una variabile di *tipo puntatore al tipo $x$* che contiene l'indirizzo di memoria di una variabile di *tipo $x$*
+
+##### Aritmetica dei Puntatori
+Se si incrementa un puntatore a un tipo $x$ di $n$, il suo valore aumenta di $n\times \text{sizeof}(T)$
+
+##### Puntatori a Funzioni
+E' possibile creare dei puntatori che puntino alle funzioni
+
+**N.B.**: questi particolari puntatori puntano alla prima istruzione del blocco istruzioni della funzione
